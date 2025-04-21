@@ -1,14 +1,15 @@
 import Marquee from "react-fast-marquee";
 const company = [
-    "Apple",
+    
     "Google",
     "Microsoft",
     "Amazon",
-    "Tesla",
+    "Slack",
     "Meta",
     "NVIDIA",
     "Samsung",
-    "IBM",
+    "Spotify",
+    "Pinterest",
     "Intel",
     "Oracle",
     "Adobe",

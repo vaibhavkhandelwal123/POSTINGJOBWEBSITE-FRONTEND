@@ -1,5 +1,6 @@
 import { Carousel } from '@mantine/carousel';
 import * as Icons from 'lucide-react';
+import { ArrowRight as IconArrowRight, ArrowLeft as IconArrowLeft } from 'lucide-react';
 const JobCategory = () => {
     const jobCategories = [
         {
@@ -85,7 +86,11 @@ const JobCategory = () => {
       <div className="text-lg mb-10 mx-auto text-mine-shaft-300 text-center w-1/2">
         Explore diverse job opportunnities tailored to your skills and interests.Start your career journey today!
       </div>
-      <Carousel slideSize="22%" height="auto" controlsOffset="md" dragFree loop>
+      <Carousel slideSize="22%" height="auto" controlsOffset="md" dragFree loop className="focus-visible:[&_button]:outline-none
+      [&_button]:!bg-bright-sun-400 [&_button]:!border-none [&_button]:hover:opacity-75 [&_button]:opacity-0 hover:[&_button]:opacity-100 "
+      nextControlIcon={<IconArrowRight className="" />}
+      previousControlIcon={<IconArrowLeft className="" />}
+      >
   {jobCategories.map((category, index) => {
     const Icon = Icons[category.icon as keyof typeof Icons] as React.ElementType;
 
