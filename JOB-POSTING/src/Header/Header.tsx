@@ -5,7 +5,7 @@ import { Avatar, Indicator } from "@mantine/core";
 import NavLinks from "./NavLinks";
 const Header = () => {
   return (
-    <div className="text-white flex justify-between items-center px-6 h-20">
+    <div className="text-white flex justify-between items-center px-6 h-20  bg-mine-shaft-950 font-['poppins']">
       <div className="flex items-center gap-2 text-bright-sun-400 ">
         <div className="font-bold text-3xl">
           <CrisisAlertIcon />

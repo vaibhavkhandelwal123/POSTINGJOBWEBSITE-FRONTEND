@@ -1,21 +1,6 @@
 import { Avatar } from "@mantine/core";
-
+import { work } from "../Data/Data";
 const Working = () => {
-
-    const work = [
-        {
-            "name": "Build your resume",
-            "desc": "Create a standout resume that highlights your skills and experience.",
-        },
-        {
-            "name": "Apply for jobs",
-            "desc": "Browse and apply for job openings that match your skills and interests.",
-        },
-        {
-            "name": "Get hired",
-            "desc": "Connect with employers and land your dream job.",
-        }
-    ];
 
     return (
         <div className="w-full bg-mine-shaft-950 py-16">

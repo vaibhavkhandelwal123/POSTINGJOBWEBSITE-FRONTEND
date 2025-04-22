@@ -3,6 +3,9 @@ import { createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import '@mantine/carousel/styles.css';
 import HomePage from "./Pages/HomePage";
+import FindJobs from "./Pages/FindJobs";
+import Header from "./Header/Header";
+import Footer from "./Footer/Footer";
 function App() {
   const theme = createTheme({
     colors: {
@@ -33,13 +36,18 @@ function App() {
     },
   });
   return (
-    <MantineProvider theme={theme}>
+    <div className="overflow-x-hidden">
+    <MantineProvider defaultColorScheme="dark" theme={theme}>
       <BrowserRouter>
+      <Header/>
         <Routes>
+          <Route path="/find-jobs" element={<FindJobs/>}/>
           <Route path="*" element={<HomePage />} />
         </Routes>
+        <Footer/>
       </BrowserRouter>
     </MantineProvider>
+    </div>
   );
 }
 

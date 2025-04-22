@@ -1,21 +1,5 @@
 import Marquee from "react-fast-marquee";
-const company = [
-    
-    "Google",
-    "Microsoft",
-    "Amazon",
-    "Slack",
-    "Meta",
-    "NVIDIA",
-    "Samsung",
-    "Spotify",
-    "Pinterest",
-    "Intel",
-    "Oracle",
-    "Adobe",
-    "Salesforce",
-    "Netflix"
-  ];
+import { company } from "../Data/Data";
 const Companies = () => {
   return (
     <div className="mt-20 pb-5">
