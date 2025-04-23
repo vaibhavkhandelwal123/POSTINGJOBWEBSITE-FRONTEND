@@ -80,13 +80,13 @@ const MultiInput = (props: any) => {
       </div>
 
       {isOpen && (
-        <div className="absolute z-10 mt-1 rounded-md shadow-md max-h-60 overflow-y-auto">
+        <div className="absolute z-10 mt-1 rounded-md shadow-xl max-h-60 overflow-y-auto  bg-mine-shaft-950">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={props.title}
-            className="bg-mine-shaft-900 w-full px-2 py-1 border-b outline-none"
+            className="bg-mine-shaft-900 border mt-3 border-bright-sun-400 w-full px-2 py-1 outline-none"
           />
           <div>
             {filteredData.map((item) => (

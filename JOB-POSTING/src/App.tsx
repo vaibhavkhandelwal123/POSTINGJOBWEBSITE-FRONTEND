@@ -6,6 +6,8 @@ import HomePage from "./Pages/HomePage";
 import FindJobs from "./Pages/FindJobs";
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
+import FindTalent from "./Pages/FindTalent";
+import TalentProfile from "./FindTalent/TalentProfile";
 function App() {
   const theme = createTheme({
     colors: {
@@ -42,7 +44,10 @@ function App() {
       <Header/>
         <Routes>
           <Route path="/find-jobs" element={<FindJobs/>}/>
+          <Route path="/find-talent" element={<FindTalent/>}/>
+          <Route path="/talent-profile" element={<TalentProfile/>}/>
           <Route path="*" element={<HomePage />} />
+
         </Routes>
         <Footer/>
       </BrowserRouter>

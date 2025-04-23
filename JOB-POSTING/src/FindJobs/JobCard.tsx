@@ -31,7 +31,7 @@ const JobCard = (props:any) => {
       </Text>
       <Divider size="xs" className="my-2" color="mine-shaft.7" />
       <div className="flex justify-between items-center">
-        <div className="font-semibold text-mine-shaft-200">&#8377;{props.package} LPA</div>
+        <div className="font-semibold text-mine-shaft-200">&#8377;{props.package}</div>
         <div className="flex gap-1 items-center text-mine-shaft-400 text-xs">
           <Clock className=" h-5 w-5" />
           {props.postedDaysAgo} days ago
