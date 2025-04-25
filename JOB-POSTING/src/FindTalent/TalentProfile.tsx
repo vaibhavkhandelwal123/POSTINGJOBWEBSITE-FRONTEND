@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react"
 import { Link } from "react-router-dom"
 import Profile from "../TalentProfile/Profile"
 import { profile } from "../Data/TalentData"
+import RecommendTalent from "../TalentProfile/RecommendTalent"
 
 const TalentProfile = () => {
   return (
@@ -13,6 +14,7 @@ const TalentProfile = () => {
         </Link>
         <div className="flex gap-5">
             <Profile {...profile}/>
+            <RecommendTalent/>
         </div>
     </div>
   )

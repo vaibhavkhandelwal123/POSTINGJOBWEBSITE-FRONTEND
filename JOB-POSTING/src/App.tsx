@@ -8,8 +8,14 @@ import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import FindTalent from "./Pages/FindTalent";
 import TalentProfile from "./FindTalent/TalentProfile";
+import Postjobs from "./Pages/Postjobs";
+import '@mantine/tiptap/styles.css';
 function App() {
   const theme = createTheme({
+    focusRing:"never",
+    fontFamily:"Poppins,sans-serif",
+    primaryColor:"bright-sun",
+    primaryShade:4,
     colors: {
       "mine-shaft": [
         "#121212",
@@ -38,13 +44,14 @@ function App() {
     },
   });
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden min-h-[100vh]">
     <MantineProvider defaultColorScheme="dark" theme={theme}>
       <BrowserRouter>
       <Header/>
         <Routes>
           <Route path="/find-jobs" element={<FindJobs/>}/>
           <Route path="/find-talent" element={<FindTalent/>}/>
+          <Route path="/post-job" element={<Postjobs/>}/>
           <Route path="/talent-profile" element={<TalentProfile/>}/>
           <Route path="*" element={<HomePage />} />
 
