@@ -51,28 +51,6 @@ const jobList = [
       description: "Spotify is searching for a Backend Developer to optimize our music delivery pipeline, improve API reliability, and scale microservices for millions of users."
     },
     {
-      jobTitle: "Cloud Solutions Architect",
-      company: "Amazon",
-      applicants: 60,
-      experience: "Senior Level",
-      jobType: "Full-Time",
-      location: "Seattle",
-      package: "60 LPA",
-      postedDaysAgo: 3,
-      description: "At Amazon Web Services, you’ll architect scalable and secure cloud solutions, mentor junior engineers, and engage with enterprise clients to lead their digital transformation."
-    },
-    {
-      jobTitle: "iOS Developer",
-      company: "Apple",
-      applicants: 20,
-      experience: "Entry Level",
-      jobType: "Internship",
-      location: "Cupertino",
-      package: "20 LPA",
-      postedDaysAgo: 7,
-      description: "Join Apple’s iOS development internship program where you’ll work on real products, contribute to Swift-based app features, and receive mentorship from industry leaders."
-    },
-    {
       jobTitle: "Data Scientist",
       company: "IBM",
       applicants: 35,
@@ -93,6 +71,28 @@ const jobList = [
       package: "55 LPA",
       postedDaysAgo: 9,
       description: "Samsung’s Hardware Engineering team needs a seasoned engineer to contribute to next-gen chip development, testing procedures, and manufacturing innovation in high-performance electronics."
+    },
+    {
+      jobTitle: "Cloud Solutions Architect",
+      company: "Amazon",
+      applicants: 60,
+      experience: "Senior Level",
+      jobType: "Full-Time",
+      location: "Seattle",
+      package: "60 LPA",
+      postedDaysAgo: 3,
+      description: "At Amazon Web Services, you’ll architect scalable and secure cloud solutions, mentor junior engineers, and engage with enterprise clients to lead their digital transformation."
+    },
+    {
+      jobTitle: "iOS Developer",
+      company: "Apple",
+      applicants: 20,
+      experience: "Entry Level",
+      jobType: "Internship",
+      location: "Cupertino",
+      package: "20 LPA",
+      postedDaysAgo: 7,
+      description: "Join Apple’s iOS development internship program where you’ll work on real products, contribute to Swift-based app features, and receive mentorship from industry leaders."
     }
   ];
   

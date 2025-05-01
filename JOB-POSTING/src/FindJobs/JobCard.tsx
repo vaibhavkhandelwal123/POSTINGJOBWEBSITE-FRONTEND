@@ -1,9 +1,10 @@
 import { Divider, Text } from "@mantine/core";
 import { Bookmark, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const JobCard = (props:any) => {
   return (
-    <div className="bg-mine-shaft-900 p-4 w-72 flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400">
+    <Link to={`/jobs`} className="bg-mine-shaft-900 p-4 w-72 flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
           <div className="p-2 bg-mine-shaft-800 rounded-md">
@@ -37,7 +38,7 @@ const JobCard = (props:any) => {
           {props.postedDaysAgo} days ago
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

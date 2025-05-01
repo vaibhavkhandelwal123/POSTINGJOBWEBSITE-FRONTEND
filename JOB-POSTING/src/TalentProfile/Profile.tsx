@@ -13,8 +13,8 @@ const Profile = (props: any) => {
           src="/avatar-7.png"
         />
       </div>
-      <div className="px-3 mt-16">
-        <div className="text-3xl font-semibold flex justify-between">
+      <div className="px-8 mt-16">
+        <div className={`text-3xl font-semibold flex justify-between items-center ${window.innerWidth < 768 ? 'mt-16' : 'mt-28'}`}>
           {props.name}{" "}
           <Button color="bright-sun.4" variant="light" fullWidth>
             Message

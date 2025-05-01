@@ -8,3 +8,16 @@
     height: 80px;
     width: 80px;
 }
+
+@layer base{
+    ul,ol{
+        list-style: revert;
+        font-size: medium;
+    }
+    p{
+        font-size: medium;
+    }
+    li{
+        margin-left: 1em;
+    }
+}

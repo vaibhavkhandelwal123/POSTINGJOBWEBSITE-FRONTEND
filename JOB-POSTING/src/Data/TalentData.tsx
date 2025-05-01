@@ -176,37 +176,31 @@ const talents = [
 
 const profile = 
   {
-    name: "Sarah Mitchell",
-    role: "Senior Software Engineer",
-    company: "Google",
-    location: "Mountain View, California, USA",
+    name: "Vaidehi Dixit",
+    role: "Software Engineer",
+    company: "TCS",
+    location: "Bangalore, India",
     about:
-      "Passionate software engineer with 8+ years of experience in developing scalable web applications. Strong background in JavaScript, TypeScript, and cloud technologies. Proven track record of leading engineering teams and delivering high-impact projects. Constant learner and advocate for clean code and agile practices.",
+      "Passionate software engineer with experience in project developing scalable web applications. Strong background in JavaScript, TypeScript, and cloud technologies. Proven track record of leading engineering teams and delivering high-impact projects. Constant learner and advocate for clean code and agile practices.",
     skills: [
       "JavaScript",
-      "TypeScript",
       "React",
       "Redux",
       "Node.js",
-      "Express",
-      "GraphQL",
       "AWS",
       "Docker",
       "Kubernetes",
-      "PostgreSQL",
+      "MySQL",
       "MongoDB",
-      "Agile",
       "Scrum",
-      "CI/CD",
-      "REST API Development",
     ],
     experience: [
       {
-        title: "Senior Software Engineer",
-        company: "Google",
-        location: "Mountain View, CA",
-        start_date: "March 2021",
-        end_date: "Present",
+        title: "Cyber Security Analyst",
+        company: "Microsoft",
+        location: "Bangalore, India",
+        start_date: "November 2024",
+        end_date: "March 2024",
         description:
           "Led the development of a microservices-based internal dashboard used by 500+ engineers. Optimized cloud functions, reducing response time by 35%. Mentored 4 junior engineers and reviewed 100+ PRs monthly.",
       },
