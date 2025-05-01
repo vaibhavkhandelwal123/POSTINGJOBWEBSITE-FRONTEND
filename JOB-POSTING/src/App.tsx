@@ -12,6 +12,7 @@ import Postjobs from "./Pages/Postjobs";
 import '@mantine/tiptap/styles.css';
 import JobDescPage from "./Pages/JobDescPage";
 import ApplyJob from "./Pages/ApplyJob";
+import Scroll from "./Scroll";
 function App() {
   const theme = createTheme({
     focusRing:"never",
@@ -49,18 +50,21 @@ function App() {
     <div className="overflow-x-hidden min-h-[100vh]">
     <MantineProvider defaultColorScheme="dark" theme={theme}>
       <BrowserRouter>
+      <div className="relative">
+      <Scroll/>
       <Header/>
         <Routes>
           <Route path="/find-jobs" element={<FindJobs/>}/>
           <Route path="/find-talent" element={<FindTalent/>}/>
           <Route path="/jobs" element={<JobDescPage/>}/>
-          <Route path="apply-job" element={<ApplyJob/>}/>
+          <Route path="/apply-job" element={<ApplyJob/>}/>
           <Route path="/post-job" element={<Postjobs/>}/>
           <Route path="/talent-profile" element={<TalentProfile/>}/>
           <Route path="*" element={<HomePage />} />
 
         </Routes>
         <Footer/>
+        </div>
       </BrowserRouter>
     </MantineProvider>
     </div>
