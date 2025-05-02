@@ -13,6 +13,7 @@ import '@mantine/tiptap/styles.css';
 import JobDescPage from "./Pages/JobDescPage";
 import ApplyJob from "./Pages/ApplyJob";
 import Scroll from "./Scroll";
+import CompanyPage from "./Pages/CompanyPage";
 function App() {
   const theme = createTheme({
     focusRing:"never",
@@ -51,13 +52,15 @@ function App() {
     <MantineProvider defaultColorScheme="dark" theme={theme}>
       <BrowserRouter>
       <div className="relative">
-      <Scroll/>
+      
       <Header/>
+      <Scroll/>
         <Routes>
           <Route path="/find-jobs" element={<FindJobs/>}/>
           <Route path="/find-talent" element={<FindTalent/>}/>
           <Route path="/jobs" element={<JobDescPage/>}/>
           <Route path="/apply-job" element={<ApplyJob/>}/>
+          <Route path="/company" element={<CompanyPage/>}/>
           <Route path="/post-job" element={<Postjobs/>}/>
           <Route path="/talent-profile" element={<TalentProfile/>}/>
           <Route path="*" element={<HomePage />} />

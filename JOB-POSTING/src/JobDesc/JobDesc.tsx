@@ -1,5 +1,5 @@
 import { ActionIcon, Button, Divider } from "@mantine/core";
-import { Bookmark, MapPin } from "lucide-react";
+import { Bookmark} from "lucide-react";
 import { Link } from "react-router-dom";
 import { card, desc, skills } from "../Data/JobDescData";
 import DomPurify from "dompurify";
@@ -87,7 +87,7 @@ const JobDesc = () => {
                 <div className=" text-mine-shaft-300">10k+ Employees</div>
               </div>
             </div>
-              <Link to="">
+              <Link to="/company">
                 <Button color="bright-sun.5" variant="light">
                   Company Page
                 </Button>
