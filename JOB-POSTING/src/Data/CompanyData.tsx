@@ -22,7 +22,7 @@ const similar=[
  employees: 58604
 },
 {
-  name: "Netflix",
+  name: "IBM",
  employees: 12800
 },
 {
@@ -30,7 +30,7 @@ const similar=[
  employees: 221000
 },
 {
-  name: "Adobe",
+  name: "Samsung",
  employees: 29439
 },
 {

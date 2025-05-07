@@ -1,8 +1,14 @@
 import { Avatar, Divider, Tabs } from "@mantine/core";
 import {  MapPin } from "lucide-react";
 import AboutComp from "./AboutComp";
+import CompanyJobs from "./CompanyJobs";
+import CompanyEmployees from "./CompanyEmployees";
+import React from "react";
 
 const Company = (props: any) => {
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="w-3/4">
       <div className="relative">
@@ -44,8 +50,8 @@ const Company = (props: any) => {
           </Tabs.List>
 
       <Tabs.Panel value="about"><AboutComp/></Tabs.Panel>
-      <Tabs.Panel value="jobs">Second panel</Tabs.Panel>
-      <Tabs.Panel value="employees">Emp</Tabs.Panel>
+      <Tabs.Panel value="jobs"><CompanyJobs/></Tabs.Panel>
+      <Tabs.Panel value="employees"><CompanyEmployees/></Tabs.Panel>
     </Tabs>
         </div>
       </div>

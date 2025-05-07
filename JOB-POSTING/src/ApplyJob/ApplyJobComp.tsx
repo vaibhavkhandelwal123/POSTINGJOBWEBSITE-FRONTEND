@@ -17,7 +17,7 @@ const ApplyJobComp = () => {
   const [submit, setSubmit] = useState(false);
   const [time, setTime] = useState(5);
 
-
+  
   const handleSubmit = () => {
     setSubmit(true);
     let x= 5;

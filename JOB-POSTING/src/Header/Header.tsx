@@ -3,6 +3,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import { Avatar, Indicator } from "@mantine/core";
 import NavLinks from "./NavLinks";
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <div className="text-white flex justify-between items-center px-6 h-20  bg-mine-shaft-950 font-['poppins']">
@@ -10,7 +11,7 @@ const Header = () => {
         <div className="font-bold text-3xl">
           <CrisisAlertIcon />
         </div>
-        <div className="text-3xl font-semibold">TargetJobs</div>
+        <Link to="/" className="text-3xl font-semibold cursor-pointer">TargetJobs</Link>
       </div>
       <NavLinks />
       <div className="flex gap-3 items-center">

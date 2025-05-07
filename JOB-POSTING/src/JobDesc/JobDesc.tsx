@@ -3,7 +3,7 @@ import { Bookmark} from "lucide-react";
 import { Link } from "react-router-dom";
 import { card, desc, skills } from "../Data/JobDescData";
 import DomPurify from "dompurify";
-const JobDesc = () => {
+const JobDesc = (props:any) => {
   const description = DomPurify.sanitize(desc);
   return (
     <div className="w-2/3">
@@ -24,11 +24,13 @@ const JobDesc = () => {
         <div className="flex flex-col gap-2 items-center">
           <Link to="/apply-job">
             <Button color="bright-sun.5" variant="light">
-              Apply
+              {props.edit ? "Edit" : "Apply Now"}
             </Button>
           </Link>
 
-          <Bookmark size={20} className="text-bright-sun-400 cursor-pointer" />
+          {props.edit ? <Button color="red.5" variant="outline">
+              Delete
+            </Button>: <Bookmark size={20} className="text-bright-sun-400 cursor-pointer" />}
         </div>
       </div>
       <Divider my="xl" />

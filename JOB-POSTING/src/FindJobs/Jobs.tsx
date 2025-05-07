@@ -1,8 +1,10 @@
+
 import { jobList } from "../Data/JobData";
 import JobCard from "./JobCard";
 import Sort from "./Sort";
 
 const Jobs = () => {
+ 
   return (
     <div className="p-5 ">
       <div className="flex justify-between items-center">
