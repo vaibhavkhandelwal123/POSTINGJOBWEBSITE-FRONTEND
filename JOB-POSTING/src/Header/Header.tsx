@@ -3,9 +3,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import { Avatar, Indicator } from "@mantine/core";
 import NavLinks from "./NavLinks";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const Header = () => {
-  return (
+  const location = useLocation();
+  return location.pathname!="/signup"&& location.pathname!="/login" &&
     <div className="text-white flex justify-between items-center px-6 h-20  bg-mine-shaft-950 font-['poppins']">
       <div className="flex items-center gap-2 text-bright-sun-400 ">
         <div className="font-bold text-3xl">
@@ -28,7 +29,6 @@ const Header = () => {
         </div>
       </div>
     </div>
-  );
 };
 
 export default Header;

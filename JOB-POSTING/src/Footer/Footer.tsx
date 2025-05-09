@@ -3,8 +3,10 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import XIcon from "@mui/icons-material/X";
 import { footerLinks } from "../Data/Data";
+import { useLocation } from "react-router-dom";
 const Footer = () => {
-  return (
+  const location = useLocation();
+  return location.pathname!="/signup" &&location.pathname!="/login" &&
     <div className="pt-20 pb-5 flex gap-5 justify-around  bg-mine-shaft-950 font-['poppins']">
       <div className="flex items-center text-bright-sun-400 flex-col w-1/4 gap-4 ">
         <div className="font-bold text-3xl flex items-center gap-2">
@@ -43,7 +45,6 @@ const Footer = () => {
         ))
       }
     </div>
-  );
 };
 
 export default Footer;

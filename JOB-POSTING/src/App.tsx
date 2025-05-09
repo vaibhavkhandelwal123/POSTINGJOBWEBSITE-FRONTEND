@@ -17,6 +17,7 @@ import Scroll from "./Scroll";
 import CompanyPage from "./Pages/CompanyPage";
 import PostedJobs from "./Pages/PostedJobsPage";
 import JobHistoryPage from "./Pages/JobHistoryPage";
+import SignUpPage from "./Pages/SignUpPage";
 function App() {
   const theme = createTheme({
     focusRing:"never",
@@ -67,6 +68,8 @@ function App() {
           <Route path="/posted-job" element={<PostedJobs/>}/>
           <Route path="/job-history" element={<JobHistoryPage/>}/>
           <Route path="/post-job" element={<Postjobs/>}/>
+          <Route path="/signup" element={<SignUpPage/>}/>
+          <Route path="/login" element={<SignUpPage/>}/>
           <Route path="/talent-profile" element={<TalentProfile/>}/>
           <Route path="*" element={<HomePage />} />
 
