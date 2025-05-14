@@ -4,6 +4,7 @@ import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import { Avatar, Indicator } from "@mantine/core";
 import NavLinks from "./NavLinks";
 import { Link, useLocation } from "react-router-dom";
+import ProfileHeader from "./ProfileHeader";
 const Header = () => {
   const location = useLocation();
   return location.pathname!="/signup"&& location.pathname!="/login" &&
@@ -16,10 +17,7 @@ const Header = () => {
       </div>
       <NavLinks />
       <div className="flex gap-3 items-center">
-        <div className="flex gap-2 items-center">
-          <div>Vaibhav</div>
-          <Avatar src="avatar.png" alt="it's me" />
-        </div>
+          <ProfileHeader/>
         <div className="bg-mine-shaft-900 rounded-full p-1.5">
           <Indicator color="bright-sun.4" size={8} offset={6} processing><NotificationsNoneIcon /></Indicator>
           
