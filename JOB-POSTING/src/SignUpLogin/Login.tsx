@@ -40,6 +40,7 @@ const Login = () => {
         label="Password"
         placeholder="Password"
       />
+      <Link to="/forgot" className="text-bright-sun-400 text-sm">forgot your password?</Link>
 
       <Button onClick={handleSubmit} autoContrast variant="filled">
         Login

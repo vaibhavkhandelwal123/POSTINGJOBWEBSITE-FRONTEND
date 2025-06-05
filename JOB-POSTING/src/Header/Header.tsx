@@ -1,13 +1,13 @@
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
-import { Avatar, Indicator } from "@mantine/core";
+import { Indicator } from "@mantine/core";
 import NavLinks from "./NavLinks";
 import { Link, useLocation } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 const Header = () => {
   const location = useLocation();
-  return location.pathname!="/signup"&& location.pathname!="/login" &&
+  return location.pathname!="/signup"&& location.pathname!="/login" && location.pathname!="/forgot" &&
     <div className="text-white flex justify-between items-center px-6 h-20  bg-mine-shaft-950 font-['poppins']">
       <div className="flex items-center gap-2 text-bright-sun-400 ">
         <div className="font-bold text-3xl">
