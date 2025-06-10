@@ -7,11 +7,12 @@ import {
   Radio,
   TextInput,
 } from "@mantine/core";
-import { AtSignIcon, LockKeyholeIcon } from "lucide-react";
+import { AtSignIcon, Check, LockKeyholeIcon, X } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../Services/UsersService";
 import { SignUpValidation } from "../Services/FormValidation";
+import { Notifications } from "@mantine/notifications";
 
 const initialForm = {
   name: "",
@@ -28,10 +29,12 @@ const blankError = {
   confirmPassword: "",
   accountType: "",
 };
-
 const SignUp = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState(initialForm);
-  const [formError, setFormError] = useState<{ [key: string]: string }>(blankError);
+  const [formError, setFormError] = useState<{ [key: string]: string }>(
+    blankError
+  );
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   const handleChange = (event: any) => {
@@ -86,9 +89,31 @@ const SignUp = () => {
       registerUser(data)
         .then((res) => {
           console.log("Registration successful:", res);
+          setData(initialForm);
+          Notifications.show({
+            title: "Registrated successful",
+            message: "Redirecting to Login Page...",
+            withCloseButton: true,
+            withBorder: true,
+            color: "teal",
+            className: "!border-green-500",
+            icon: <Check size={25} />,
+          })
+          setTimeout(() => {
+           navigate("/login");
+          }, 4000);
         })
         .catch((err) => {
           console.error("Registration failed:", err);
+          Notifications.show({
+            title: "Registration failed",
+            message: err.response.data.errorMessage,
+            withCloseButton: true,
+            withBorder: true,
+            color: "red",
+            className: "!border-red-500",
+            icon: <X size={25} />,
+          });
         });
     }
   };
@@ -178,9 +203,9 @@ const SignUp = () => {
 
       <div className="mx-auto">
         Have an account?{" "}
-        <Link to="/login" className="text-bright-sun-400 hover:underline">
+        <span onClick={() => { navigate("/login"); setFormError(initialForm); setData(initialForm);}} className="text-bright-sun-400 hover:underline cursor-pointer">
           Login
-        </Link>
+        </span>
       </div>
     </div>
   );

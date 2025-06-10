@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { createTheme, MantineProvider } from "@mantine/core";
+import { createTheme, MantineProvider} from "@mantine/core";
 import "@mantine/core/styles.css";
 import '@mantine/carousel/styles.css';
 import "@mantine/dates/styles.css";
+import '@mantine/notifications/styles.css';
 import HomePage from "./Pages/HomePage";
 import FindJobs from "./Pages/FindJobs";
 import Header from "./Header/Header";
@@ -20,6 +21,7 @@ import JobHistoryPage from "./Pages/JobHistoryPage";
 import SignUpPage from "./Pages/SignUpPage";
 import ProfilePage from "./Pages/ProfilePage";
 import Forgot from "./SignUpLogin/Forgot";
+import { Notifications } from '@mantine/notifications';
 function App() {
   const theme = createTheme({
     focusRing:"never",
@@ -56,6 +58,7 @@ function App() {
   return (
     <div className="overflow-x-hidden min-h-[100vh]">
     <MantineProvider defaultColorScheme="dark" theme={theme}>
+      <Notifications position="top-center" zIndex={1000}/>
       <BrowserRouter>
       <div className="relative">
       

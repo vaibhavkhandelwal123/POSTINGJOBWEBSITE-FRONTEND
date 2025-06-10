@@ -17,6 +17,7 @@
     "@mantine/core": "^7.17.7",
     "@mantine/dates": "^8.0.0",
     "@mantine/hooks": "^7.17.7",
+    "@mantine/notifications": "^8.0.2",
     "@mantine/tiptap": "^7.17.7",
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
