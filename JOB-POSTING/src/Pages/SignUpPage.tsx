@@ -1,11 +1,15 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Login from "../SignUpLogin/Login";
 import SignUp from "../SignUpLogin/SignUp";
+import { Button } from "@mantine/core";
+import { ArrowLeft } from "lucide-react";
 
 const SignUpPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   return (
-    <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins'] px-4 overflow-hidden">
+    <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins']  overflow-hidden">
+      <Button className="!absolute left-5 mt-5 z-10" onClick={() => navigate("/")} leftSection={<ArrowLeft size={20}/>} color="bright-sun.5" variant="light">Home</Button>
       <div className={`w-[100vw] h-[100vh] flex [&>*]:flex-shrink-0 transition-all ease-in-out duration-1000 ${location.pathname=='/signup'?'-translate-x-1/2':'translate-x-0'} `}>
         <Login/>
         <div className={`flex gap-5 items-center justify-center transition-all ease-in-out duration-1000 bg-mine-shaft-900 w-1/2 h-full ${location.pathname=='/signup'?'rounded-r-[200px]':'rounded-l-[200px]'} flex-col`}>

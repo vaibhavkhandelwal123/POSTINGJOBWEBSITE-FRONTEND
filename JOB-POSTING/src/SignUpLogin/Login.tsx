@@ -14,14 +14,15 @@ const Login = () => {
   const [data, setData] = useState<{ [key: string]: string }>(form);
   const [formError, setFormError] = useState<{ [key: string]: string }>(form);
   const handleChange = (event: any) => {
-     const { name, value } = event.target;
+    const { name, value } = event.target;
     const updatedData = { ...data, [name]: value };
     setData(updatedData);
-    const error = loginValidation(name, value);
+    
     setFormError({
       ...formError,
-      [name]: error,
+      [name]: loginValidation(name, value),
     });
+    
   };
   
   const handleSubmit = () => {
@@ -96,9 +97,9 @@ const Login = () => {
       </Button>
       <div className="mx-auto">
         Don't have an account?{" "}
-        <Link to="/signup" className="text-bright-sun-400 hover:underline">
+        <span onClick={() => { navigate("/signup");}} className="text-bright-sun-400 hover:underline cursor-pointer">
           SignUp
-        </Link>
+        </span>
       </div>
     </div>
   );
