@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import { AtSignIcon, Check, LockKeyholeIcon, X } from "lucide-react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import { registerUser } from "../Services/UsersService";
 import { SignUpValidation } from "../Services/FormValidation";
 import { Notifications } from "@mantine/notifications";
@@ -49,7 +49,7 @@ const SignUp = () => {
 
     const error = SignUpValidation(name, value);
     const confirmPasswordError =
-      name === "password" || name === "confirmPassword"
+      name === "confirmPassword"
         ? updatedData.password !== updatedData.confirmPassword
           ? "Passwords do not match"
           : ""

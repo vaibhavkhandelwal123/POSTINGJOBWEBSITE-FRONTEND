@@ -24,4 +24,21 @@ const forgotUser=async (user:any)=>{
         throw error;
     }
 }
-export {registerUser, loginUser,forgotUser};
+const sendOtp = async (email: any) => {
+    try {
+        const res = await axios.post(`${base_url}sendOtp`, { email });
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const verifyOtp = async (email: any, otp: any) => {
+    try {
+        const res = await axios.get(`${base_url}verifyOtp`, { params: { email, otp } });
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+export {registerUser, loginUser,forgotUser, sendOtp, verifyOtp};
