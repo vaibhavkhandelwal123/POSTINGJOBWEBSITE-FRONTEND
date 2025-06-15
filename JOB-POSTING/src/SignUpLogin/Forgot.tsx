@@ -6,37 +6,59 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Notification,rem } from "@mantine/core";
 import { Check } from "lucide-react";
+import { loginValidation } from "../Services/FormValidation";
 const form = {
   email: "",
   password: "",
 };
 const Forgot = () => {
-  const navigate = useNavigate();
-  const [data, setData] = useState(form);
+  const navigate = useNavigate();  
+  const [data, setData] = useState<{ [key: string]: string }>(form);
+  
+  const [formError, setFormError] = useState<{ [key: string]: string }>(form);
   const [time, setTime] = useState(5);
     const [submit, setSubmit] = useState(false);
   
   const handleChange = (event: any) => {
-    setData({ ...data, [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+    setData({ ...data, [name]: value });
+    setFormError({
+          ...formError,
+          [name]: loginValidation(name, value),
+        });
   };
   
   const handleSubmit = () => {
-    console.log(data);
-    forgotUser(data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-      setSubmit(true);
-    let x= 5;
-    setInterval(() => {
-      x--;
-      setTime(x);
-      if (x === 0) {
-        navigate("/login");
-      }
-    },1000)
-    setData(form);
+    let valid = true;
+        const newFormError: { [key: string]: string } = {};
+    
+        for (const key in data) {
+          newFormError[key] = loginValidation(key, data[key]);
+    
+          if (newFormError[key]) valid = false;
+        }
+    
+    if (valid) {
+      forgotUser(data)
+        .then((res) => {
+          console.log("Password reset successful:", res);
+          setSubmit(true);
+          const interval = setInterval(() => {
+            setTime((prev) => {
+              if (prev <= 1) {
+                clearInterval(interval);
+                navigate("/login");
+                return 5;
+              }
+              return prev - 1;
+            });
+          }, 1000);
+        })
+        .catch((err) => {
+          console.error("Password reset failed:", err);
+          alert(err.response.data.errorMessage);
+        });
+    }
       
   };
   
@@ -48,6 +70,7 @@ const Forgot = () => {
           Forgot Password
         </div>
         <TextInput
+         error={formError.email}
           value={data.email}
           onChange={handleChange}
           name="email"
@@ -57,6 +80,7 @@ const Forgot = () => {
           placeholder="Your email"
         />
         <PasswordInput
+          error={formError.password}
           value={data.password}
           onChange={handleChange}
           name="password"

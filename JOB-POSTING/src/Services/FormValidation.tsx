@@ -36,6 +36,16 @@ const loginValidation = (name: string, value: string) => {
 
     case "password":
       if (value.length == 0) return "Password is required";
+      if (!/[A-Z]/.test(value))
+        return "Password must contain at least one uppercase letter";
+      if (!/[a-z]/.test(value))
+        return "Password must contain at least one lowercase letter";
+      if (!/[0-9]/.test(value))
+        return "Password must contain at least one number";
+      if (!/[!@#$%^&*(),.?":{}|<>]/.test(value))
+        return "Password must contain at least one special character";
+      if (value.length > 20) return "Password must be at most 20 characters";
+      if (value.length < 8) return "Password must be at least 8 characters";
       return "";
     default:
       return "";

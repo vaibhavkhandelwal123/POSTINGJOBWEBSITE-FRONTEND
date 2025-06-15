@@ -5,7 +5,6 @@ import { loginUser } from "../Services/UsersService";
 import { useState } from "react";
 import { Notifications } from "@mantine/notifications";
 import { loginValidation } from "../Services/FormValidation";
-import Forgot from "./Forgot";
 const form = {
   email: "",
   password: "",
