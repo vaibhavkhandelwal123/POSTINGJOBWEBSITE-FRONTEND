@@ -26,7 +26,7 @@ const forgotUser=async (user:any)=>{
 }
 const sendOtp = async (email: any) => {
     try {
-        const res = await axios.post(`${base_url}sendOtp`, { email });
+        const res = await axios.post(`${base_url}sendOtp/${email}`);
         return res.data;
     } catch (error) {
         throw error;
@@ -35,7 +35,7 @@ const sendOtp = async (email: any) => {
 
 const verifyOtp = async (email: any, otp: any) => {
     try {
-        const res = await axios.get(`${base_url}verifyOtp`, { params: { email, otp } });
+        const res = await axios.get(`${base_url}verifyOtp/${email}/${otp}`);
         return res.data;
     } catch (error) {
         throw error;
