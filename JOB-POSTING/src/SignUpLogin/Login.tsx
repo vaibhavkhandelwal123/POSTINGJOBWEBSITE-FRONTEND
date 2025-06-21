@@ -1,15 +1,19 @@
-import { Button, PasswordInput, TextInput } from "@mantine/core";
+import { Button, LoadingOverlay, PasswordInput, TextInput } from "@mantine/core";
 import { AtSignIcon, Check, LockKeyholeIcon, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../Services/UsersService";
 import { useState } from "react";
-import { Notifications } from "@mantine/notifications";
 import { loginValidation } from "../Services/FormValidation";
+import { useDispatch } from "react-redux";
+import { NotificationError, NotificationSuccess } from "./NotificationAny";
+import { setUser } from "../Slices/UserSlice";
 const form = {
   email: "",
   password: "",
 };
 const Login = () => {
+  const [loader, setLoader] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState<{ [key: string]: string }>(form);
   const [formError, setFormError] = useState<{ [key: string]: string }>(form);
@@ -25,6 +29,7 @@ const Login = () => {
   };
 
   const handleSubmit = () => {
+    setLoader(true);
     let valid = true;
     const newFormError: { [key: string]: string } = {};
 
@@ -37,34 +42,27 @@ const Login = () => {
       loginUser(data)
         .then((res) => {
           console.log("Login successful:", res);
-          Notifications.show({
-            title: "Login successful",
-            message: "Redirecting to Home Page...",
-            withCloseButton: true,
-            withBorder: true,
-            color: "teal",
-            className: "!border-green-500",
-            icon: <Check size={25} />,
-          });
+          NotificationSuccess("Login successful", "Redirecting to Home Page...");
           setTimeout(() => {
+            setLoader(false);
+            dispatch(setUser(res));
             navigate("/home");
           }, 4000);
         })
         .catch((err) => {
+          setLoader(false);
           console.error("Login failed:", err);
-          Notifications.show({
-            title: "Login failed",
-            message: err.response.data.errorMessage,
-            withCloseButton: true,
-            withBorder: true,
-            color: "red",
-            className: "!border-red-500",
-            icon: <X size={25} />,
-          });
+          NotificationError("Login failed", err.response.data.errorMessage);
         });
     }
   };
-  return (
+  return <>
+    <LoadingOverlay
+          visible={loader}
+          zIndex={1000}
+          overlayProps={{ radius: 'sm', blur: 2 }}
+          loaderProps={{ color: 'bright-sun.4', type: 'bars' }}
+        />
     <div className="w-1/2 px-20 flex flex-col justify-center gap-3">
       <div className="text-2xl font-semibold">Login</div>
       <TextInput
@@ -95,7 +93,7 @@ const Login = () => {
         forgot your password?
       </Link>
 
-      <Button onClick={handleSubmit} autoContrast variant="filled">
+      <Button loading={loader} onClick={handleSubmit} autoContrast variant="filled">
         Login
       </Button>
       <div className="mx-auto">
@@ -110,7 +108,7 @@ const Login = () => {
         </span>
       </div>
     </div>
-  );
+  </>
 };
 
 export default Login;

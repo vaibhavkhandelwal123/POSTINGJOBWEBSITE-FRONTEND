@@ -9,23 +9,30 @@ import {
   UserCircle,
 } from "lucide-react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { removeUser } from "../Slices/UserSlice";
 
 const ProfileHeader = () => {
+  const user = useSelector((state:any) => state.user);
   const [checked, setChecked] = useState(false);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(removeUser());
+  };
   return (
     <Menu shadow="md" width={200} opened={open} onChange={setOpen}>
       <Menu.Target>
         <div className="flex gap-2 items-center cursor-pointer">
-          <div>Vaibhav</div>
+          <div>{user.name}</div>
           <Avatar src="avatar.png" alt="it's me" />
         </div>
       </Menu.Target>
 
-      <Menu.Dropdown onChange={()=> setOpen(true)}>
-        <Link to='/profile'>
-        <Menu.Item leftSection={<UserCircle size={14} />}>Profile</Menu.Item>
+      <Menu.Dropdown onChange={() => setOpen(true)}>
+        <Link to="/profile">
+          <Menu.Item leftSection={<UserCircle size={14} />}>Profile</Menu.Item>
         </Link>
         <Menu.Item leftSection={<MessageCircle size={14} />}>
           Messages
@@ -39,8 +46,8 @@ const ProfileHeader = () => {
               onChange={(event) => setChecked(event.currentTarget.checked)}
               size="md"
               color="dark.5"
-              onLabel={<Sun size={16} style={{color:"yellow"}} />}
-              offLabel={<MoonStar size={16} style={{color:"skyblue"}} />}
+              onLabel={<Sun size={16} style={{ color: "yellow" }} />}
+              offLabel={<MoonStar size={16} style={{ color: "skyblue" }} />}
             />
           }
         >
@@ -49,7 +56,11 @@ const ProfileHeader = () => {
 
         <Menu.Divider />
 
-        <Menu.Item color="red" leftSection={<LogOut size={14} />}>
+        <Menu.Item
+          onClick={handleLogout}
+          color="red"
+          leftSection={<LogOut size={14} />}
+        >
           Logout
         </Menu.Item>
       </Menu.Dropdown>

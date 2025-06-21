@@ -1,5 +1,5 @@
 import { Button, PasswordInput, TextInput } from "@mantine/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { forgotUser, sendOtp, verifyOtp } from "../Services/UsersService";
 import { AtSignIcon, LockKeyholeIcon } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import { Notification, rem } from "@mantine/core";
 import { Check } from "lucide-react";
 import { loginValidation } from "../Services/FormValidation";
 import { NotificationError, NotificationSuccess } from "./NotificationAny";
+import { useInterval } from "@mantine/hooks";
 const form = {
   email: "",
   password: "",
@@ -15,6 +16,17 @@ const form = {
 const Forgot = () => {
   const navigate = useNavigate();
   const [data, setData] = useState<{ [key: string]: string }>(form);
+  const [seconds, setSeconds] = useState(60);
+  const interval = useInterval(() => setSeconds((s) => s - 1), 1000);
+
+  
+
+  useEffect(() => {
+    if (interval.active && seconds <= 0) {
+      interval.stop();
+      setSeconds(0);
+    }
+  }, [seconds, interval]);
 
   const [formError, setFormError] = useState<{ [key: string]: string }>(form);
   const [time, setTime] = useState(5);
@@ -23,6 +35,7 @@ const Forgot = () => {
   const [verify, setVerify] = useState(false);
   const [otpValue, setOtpValueState] = useState("");
   const [loading, setLoading] = useState(false);
+  const [first,setFirst] = useState(false);
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setData({ ...data, [name]: value });
@@ -72,12 +85,14 @@ const Forgot = () => {
       sendOtp(data.email)
         .then((res) => {
           console.log("OTP sent successfully:", res);
-          NotificationSuccess("OTP sent successfully", "Enter the OTP to verify your email");  
+          NotificationSuccess("OTP sent successfully", "Enter the OTP to verify your email");
           setOtp(true);
+          setFirst(true);
           setLoading(false);
+          setSeconds(60);
+          interval.start();
         })
         .catch((err) => {
-          console.error("Failed to send OTP:", err);
           NotificationError("Failed to send OTP", err.response.data.errorMessage);
           setLoading(false);
         });
@@ -123,16 +138,25 @@ const Forgot = () => {
               className="w-3/4"
             />
 
-            <Button
+            {!first?<Button
               className="mt-6"
               onClick={handleOTP}
               loading={loading}
               autoContrast
               variant="filled"
-              disabled={Otp || verify || data.email === "" || formError.email !== ""}
+              disabled={Otp || data.email === "" || formError.email !== ""}
             >
               Send OTP
-            </Button>
+            </Button>:<Button
+              className="mt-6"
+              onClick={handleOTP}
+              loading={loading}
+              autoContrast
+              variant="filled"
+              disabled={interval.active || data.email === "" || formError.email !== ""}
+            >
+              {interval.active ? `${seconds} s` : "Resend OTP"}
+            </Button>}
           </div>
           
           <div className="w-full flex flex-wrap items-center gap-7">
