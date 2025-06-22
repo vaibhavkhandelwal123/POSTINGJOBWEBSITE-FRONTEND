@@ -41,29 +41,33 @@ const SignUp = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   const handleChange = (event: any) => {
-    if (typeof event === "string") {
-      setData({ ...data, accountType: event });
-      return;
+  if (typeof event === "string") {
+    setData({ ...data, accountType: event });
+    return;
+  }
+
+  const { name, value } = event.target;
+  const updatedData = { ...data, [name]: value };
+  setData(updatedData);
+
+  const error = SignUpValidation(name, value);
+  let confirmPasswordError = formError.confirmPassword;
+
+  if (name === "password" || name === "confirmPassword") {
+    if (updatedData.password && updatedData.confirmPassword && updatedData.password !== updatedData.confirmPassword) {
+      confirmPasswordError = "Passwords do not match";
+    } else {
+      confirmPasswordError = "";
     }
+  }
 
-    const { name, value } = event.target;
-    const updatedData = { ...data, [name]: value };
-    setData(updatedData);
+  setFormError({
+    ...formError,
+    [name]: error,
+    confirmPassword: confirmPasswordError,
+  });
+};
 
-    const error = SignUpValidation(name, value);
-    const confirmPasswordError =
-      name === "confirmPassword"
-        ? updatedData.password !== updatedData.confirmPassword
-          ? "Passwords do not match"
-          : ""
-        : formError.confirmPassword;
-
-    setFormError({
-      ...formError,
-      [name]: error,
-      confirmPassword: confirmPasswordError,
-    });
-  };
 
   const handleSubmit = () => {
     if (!termsAccepted) {
@@ -76,6 +80,7 @@ const SignUp = () => {
 
     for (const key in data) {
       if (key === "accountType") continue;
+
 
       if (key !== "confirmPassword") {
         newFormError[key] = SignUpValidation(key, data[key]);
