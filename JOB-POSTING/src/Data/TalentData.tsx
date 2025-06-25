@@ -174,61 +174,59 @@ const talents = [
   },
 ];
 
-const profile = 
-  {
-    name: "Vaidehi Dixit",
-    role: "Software Engineer",
-    company: "TCS",
-    location: "Bangalore, India",
-    about:
-      "Passionate software engineer with experience in project developing scalable web applications. Strong background in JavaScript, TypeScript, and cloud technologies. Proven track record of leading engineering teams and delivering high-impact projects. Constant learner and advocate for clean code and agile practices.",
-    skills: [
-      "JavaScript",
-      "React",
-      "Redux",
-      "Node.js",
-      "AWS",
-      "Docker",
-      "Kubernetes",
-      "MySQL",
-      "MongoDB",
-      "Scrum",
-    ],
-    experience: [
-      {
-        title: "Cyber Security Analyst",
-        company: "Microsoft",
-        location: "Bangalore, India",
-        start_date: "November 2024",
-        end_date: "March 2024",
-        description:
-          "Led the development of a microservices-based internal dashboard used by 500+ engineers. Optimized cloud functions, reducing response time by 35%. Mentored 4 junior engineers and reviewed 100+ PRs monthly.",
-      },
-      {
-        title: "Software Engineer",
-        company: "Spotify",
-        location: "San Francisco, CA",
-        start_date: "July 2017",
-        end_date: "February 2021",
-        description:
-          "Built new modules for Jira Cloud using React and Node.js. Integrated third-party tools through REST/GraphQL APIs. Participated in bi-weekly sprint planning and retrospectives.",
-      },
-      
-    ],
-    certifications: [
-      {
-        name: "AWS Certified Solutions Architect - Associate",
-        issuer: "Amazon",
-        issue_date: "September 2022",
-        certification_id: "AWS-ASA-0922-56789",
-      },
-      {
-        name: "React Professional Certification",
-        issuer: "Meta",
-        issue_date: "June 2021",
-        certification_id: "META-RPC-61234",
-      },
-    ],
-  }
+const profile = {
+  name: "Vaidehi Dixit",
+  role: "Software Engineer",
+  company: "TCS",
+  location: "Bangalore, India",
+  about:
+    "Passionate software engineer with experience in project developing scalable web applications. Strong background in JavaScript, TypeScript, and cloud technologies. Proven track record of leading engineering teams and delivering high-impact projects. Constant learner and advocate for clean code and agile practices.",
+  skills: [
+    "JavaScript",
+    "React",
+    "Redux",
+    "Node.js",
+    "AWS",
+    "Docker",
+    "Kubernetes",
+    "MySQL",
+    "MongoDB",
+    "Scrum",
+  ],
+  experience: [
+    {
+      title: "Cyber Security Analyst",
+      company: "Microsoft",
+      location: "Bangalore, India",
+      start_date: "November 2024",
+      end_date: "March 2024",
+      description:
+        "Led the development of a microservices-based internal dashboard used by 500+ engineers. Optimized cloud functions, reducing response time by 35%. Mentored 4 junior engineers and reviewed 100+ PRs monthly.",
+    },
+    {
+      title: "Software Engineer",
+      company: "Spotify",
+      location: "San Francisco, CA",
+      start_date: "July 2017",
+      end_date: "February 2021",
+      description:
+        "Built new modules for Jira Cloud using React and Node.js. Integrated third-party tools through REST/GraphQL APIs. Participated in bi-weekly sprint planning and retrospectives.",
+    },
+  ],
+  certifications: [
+    {
+      name: "AWS Certified Solutions Architect - Associate",
+      issuer: "Amazon",
+      issue_date: "September 2022",
+      certification_id: "AWS-ASA-0922-56789",
+    },
+    {
+      name: "React Professional Certification",
+      issuer: "Meta",
+      issue_date: "June 2021",
+      certification_id: "META-RPC-61234",
+    },
+  ],
+};
 
 export { searchFields, talents, profile };

@@ -1,35 +1,38 @@
 import { ActionIcon, Divider, TagsInput, Textarea } from "@mantine/core";
-import { BriefcaseBusiness, Edit2, MapPin, Plus, Save } from "lucide-react";
+import { Edit2, Plus, Save } from "lucide-react";
 import ExpCard from "./ExpCard";
 import CertCard from "./CertCard";
-import { useState } from "react";
-import SelectInput from "./SelectInput";
-import { fields } from "../Data/ProfileData";
+import { useEffect, useState } from "react";
 import ExpInput from "./ExpInput";
 import CertiInput from "./CertiInput";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from "../Services/ProfileService";
+import Info from "./Info";
+import { setProfile } from "../Slices/ProfileSlice";
 
-const Profile = (props: any) => {
-  const [skills, setSkills] = useState([
-    "Java",
-    "React",
-    "Node.js",
-    "Express",
-    "MongoDB",
-  ]);
-  const [edit, setEdit] = useState([false, false, false, false, false]);
-  const [about, setAbout] = useState(
-    "Passionate software engineer with experience in project developing scalable web applications. Strong background in JavaScript, TypeScript, and cloud technologies. Proven track record of leading engineering teams and delivering high-impact projects. Constant learner and advocate for clean code and agile practices Passionate software engineer with experience in project developing scalable web applications. Strong background in JavaScript, TypeScript, and cloud technologies. Proven track record of leading engineering teams and delivering high-impact projects. Constant learner and advocate for clean code and agile practices"
-  );
+const Profile = () => {
+  const dispatch = useDispatch();
+  const user=useSelector((state: any) => state.user);
+  const profile = useSelector((state: any) => state.profile);
+  
+  const [edit, setEdit] = useState([false, false, false, false]);
 
-  const [exp,setExp] = useState(false);
-  const [certi,setCerti] = useState(false);
+  const [exp, setExp] = useState(false);
+  const [certi, setCerti] = useState(false);
+
   const handleEdit = (index: number) => {
     const newEdit = [...edit];
     newEdit[index] = !newEdit[index];
     setEdit(newEdit);
   };
 
-  const select = fields;
+  useEffect(()=>{
+    getProfile(user.id).then((data:any)=>{
+      dispatch(setProfile(data));
+    }).catch((error:any)=>{
+      console.error(error);
+    });
+  },[])
   return (
     <div className="w-4/5 mx-auto">
       <div className="relative">
@@ -44,59 +47,22 @@ const Profile = (props: any) => {
         />
       </div>
       <div className="px-8 mt-16">
-        <div
-          className={`text-3xl font-semibold flex justify-between items-center ${
-            window.innerWidth < 768 ? "mt-16" : "mt-36"
-          }`}
-        >
-          {props.name}{" "}
-          <ActionIcon
-            onClick={() => handleEdit(0)}
-            size="lg"
-            variant="subtle"
-            color="bright-sun.4"
-          >
-            {edit[0] ? <Save className="" /> : <Edit2 className="" />}
-          </ActionIcon>
-        </div>
-        {edit[0] && (
-          <>
-            <div className="flex gap-10 [&>*]:w-1/2">
-              <SelectInput {...select[0]} />
-              <SelectInput {...select[1]} />
-            </div>
-            <div>
-              <SelectInput {...select[2]} />
-            </div>
-          </>
-        )}
-        {!edit[0] && (
-          <div>
-            <div className="text-xl flex items-center gap-1">
-              <BriefcaseBusiness className=" h-5 w-5 stroke={1.5}" />
-              {props.role} &bull; {props.company}
-            </div>
-            <div className="flex gap-1 items-center text-mine-shaft-300 text-lg">
-              <MapPin className=" h-5 w-5 stroke={1.5}" />
-              {props.location}
-            </div>
-          </div>
-        )}
+        <Info/>
         <Divider my="xl" size="sm" />
         <div className="flex flex-col justify-between">
           <div className="text-2xl font-semibold mb-3 flex justify-between">
             About
             <ActionIcon
-              onClick={() => handleEdit(1)}
+              onClick={() => handleEdit(0)}
               size="lg"
               variant="subtle"
               color="bright-sun.4"
             >
-              {edit[1] ? <Save className="" /> : <Edit2 className="" />}
+              {edit[0] ? <Save className="" /> : <Edit2 className="" />}
             </ActionIcon>
           </div>
           <div className="">
-            {edit[1] && (
+            {edit[0] && (
               <Textarea
                 value={about}
                 autosize
@@ -105,9 +71,9 @@ const Profile = (props: any) => {
                 onChange={(event) => setAbout(event.currentTarget.value)}
               />
             )}
-            {!edit[1] && (
+            {!edit[0] && (
               <div className="text-sm text-mine-shaft-300 text-justify">
-                {about}
+                {profile?.about}
               </div>
             )}
           </div>
@@ -117,15 +83,15 @@ const Profile = (props: any) => {
           <div className="text-2xl font-semibold mb-3 flex justify-between">
             Skills
             <ActionIcon
-              onClick={() => handleEdit(2)}
+              onClick={() => handleEdit(1)}
               size="lg"
               variant="subtle"
               color="bright-sun.4"
             >
-              {edit[2] ? <Save className="" /> : <Edit2 className="" />}
+              {edit[1] ? <Save className="" /> : <Edit2 className="" />}
             </ActionIcon>
           </div>
-          {edit[2] ? (
+          {edit[1] ? (
             <TagsInput
               placeholder="add skills"
               splitChars={[",", " ", "|"]}
@@ -134,7 +100,7 @@ const Profile = (props: any) => {
             />
           ) : (
             <div className="flex gap-2 flex-wrap">
-              {skills.map((skill: string, index: number) => (
+              {profile?.skills?.map((skill: any, index: number) => (
                 <div
                   className="bg-bright-sun-300 bg-opacity-15 rounded-3xl text-bright-sun-400 px-3 py-1 gap-1 text-sm font-medium"
                   key={index}
@@ -159,18 +125,18 @@ const Profile = (props: any) => {
                 <Plus className="" size="large" />
               </ActionIcon>
               <ActionIcon
-                onClick={() => handleEdit(3)}
+                onClick={() => handleEdit(2)}
                 size="lg"
                 variant="subtle"
                 color="bright-sun.4"
               >
-                {edit[3] ? <Save className="" /> : <Edit2 className="" />}
+                {edit[2] ? <Save className="" /> : <Edit2 className="" />}
               </ActionIcon>
             </div>
           </div>
           <div className="flex flex-col gap-8">
-            {props.experience?.map((exp: any, index: any) => (
-              <ExpCard key={index} {...exp} edit={edit[3]} />
+            {profile?.experiences?.map((exp: any, index: any) => (
+              <ExpCard key={index} {...exp} edit={edit[2]} />
             ))}
             {exp&&<ExpInput setEdit={setExp} add/>}
           </div>
@@ -190,18 +156,18 @@ const Profile = (props: any) => {
                 <Plus className="" size="large" />
               </ActionIcon>
             <ActionIcon
-              onClick={() => handleEdit(4)}
+              onClick={() => handleEdit(3)}
               size="lg"
               variant="subtle"
               color="bright-sun.4"
             >
-              {edit[4] ? <Save className="" /> : <Edit2 className="" />}
+              {edit[3] ? <Save className="" /> : <Edit2 className="" />}
             </ActionIcon>
             </div>
           </div>
           <div className="flex flex-col gap-8">
-            {props.certifications?.map((cert: any, index: any) => (
-             <CertCard key={index} {...cert} edit={edit[4]}/>
+            {profile?.certifications?.map((cert: any, index: any) => (
+             <CertCard key={index} {...cert} edit={edit[3]}/>
             ))}
             {certi&&<CertiInput setEdit={setCerti}/>}
           </div>
