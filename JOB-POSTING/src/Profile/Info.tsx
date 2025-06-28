@@ -2,7 +2,7 @@ import { useState } from "react";
 import { fields } from "../Data/ProfileData";
 import SelectInput from "./SelectInput";
 import { ActionIcon } from "@mantine/core";
-import { BriefcaseBusiness, Edit2, MapPin, Save } from "lucide-react";
+import { BriefcaseBusiness, Check, Edit2, MapPin, Save, X } from "lucide-react";
 import { useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
@@ -20,16 +20,18 @@ const Info = () => {
     }
     else{
       setEdit(false);
-      let updatedProfile={...profile,...form.getValues()};
-      dispatch(changeProfile(updatedProfile));
-      NotificationSuccess("Success","Profile Updated Successfully")
     }
   };
   const form = useForm({
     mode: 'controlled',
     initialValues: { jobTitle: '', company: '' ,location: ''},
-    
   })
+  const handleSave = () => {
+    setEdit(false);
+      let updatedProfile={...profile,...form.getValues()};
+      dispatch(changeProfile(updatedProfile));
+      NotificationSuccess("Success","Profile Updated Successfully")
+  }
   return (
     <div className="flex flex-col gap-2">
       <div
@@ -38,14 +40,26 @@ const Info = () => {
         }
       >
         {user.name}{" "}
-        <ActionIcon
+        <div>
+          {edit && (
+            <ActionIcon
+              onClick={handleSave}
+              size="lg"
+              variant="subtle"
+              color={edit?"green.8":"bright-sun.4"}
+            >
+          <Check className="w-4/5 h-4/5" />
+        </ActionIcon>)}
+          <ActionIcon
           onClick={handleEdit}
           size="lg"
           variant="subtle"
-          color="bright-sun.4"
+          color={edit?"red.8":"bright-sun.4"}
+          
         >
-          {edit ? <Save className="" /> : <Edit2 className="" />}
+          {edit ? <X className="" /> : <Edit2 className="" />}
         </ActionIcon>
+        </div>
       </div>
       {edit && (
         <>

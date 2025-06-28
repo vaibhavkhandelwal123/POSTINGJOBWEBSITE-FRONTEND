@@ -2,9 +2,21 @@ import { Button } from "@mantine/core";
 import { useState } from "react";
 import ExpInput from "./ExpInput";
 import { formatData } from "../Services/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../Slices/ProfileSlice";
+import { NotificationSuccess } from "../SignUpLogin/NotificationAny";
 
 const ExpCard = (props: any) => {
   const [edit,setEdit] = useState(false);
+  const dispatch = useDispatch();
+  const profile = useSelector((state:any)=>state.profile);
+  const handleDelete=()=>{
+    let exp = [...profile.experiences];
+    exp.splice(props.index,1);
+    let updatedProfile = {...profile,experiences:exp};
+    dispatch(changeProfile(updatedProfile));
+    NotificationSuccess("Success","Experiece Deleted Succssfully");
+  }
   return !edit?(
     <div className="flex flex-col gap-2">
       <div className="flex justify-between">
@@ -24,7 +36,7 @@ const ExpCard = (props: any) => {
           </div>
         </div>
         <div className="text-sm text-mine-shaft-300">
-          {formatData(props.startDate)} - {formatData(props.endDate)}
+          {formatData(props.startDate)} - {props.working?"Present":formatData(props.endDate)}
         </div>
       </div>
       <div className="text-sm text-justify text-mine-shaft-300">
@@ -34,12 +46,12 @@ const ExpCard = (props: any) => {
         <Button onClick={()=>setEdit(true)} color="bright-sun.4" variant="outline" fullWidth>
           Edit
         </Button>
-        <Button color="red.8" variant="light" fullWidth>
+        <Button onClick={handleDelete} color="red.8" variant="light" fullWidth>
           Delete
         </Button>
       </div>}
     </div>
-  ):<ExpInput setEdit={setEdit} />
+  ):<ExpInput {...props} setEdit={setEdit} />
 }
 
 export default ExpCard;

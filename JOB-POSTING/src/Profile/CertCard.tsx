@@ -1,8 +1,20 @@
 import { ActionIcon } from "@mantine/core";
 import { Trash2 } from "lucide-react";
 import { formatData } from "../Services/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../Slices/ProfileSlice";
+import { NotificationSuccess } from "../SignUpLogin/NotificationAny";
 
 const CertCard = (props: any) => {
+  const profile = useSelector((state: any) => state.profile);
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    let certi = [...profile.certifications];
+    certi.splice(props.index, 1);
+    let updatedProfile = { ...profile, certifications: certi };
+    dispatch(changeProfile(updatedProfile));
+    NotificationSuccess("Success", "Certificate Deleted Succssfully");
+  };
   return (
     <div className="flex justify-between">
       <div className="flex items-center gap-2">
@@ -16,13 +28,20 @@ const CertCard = (props: any) => {
       </div>
       <div className="flex items-center gap-2">
         <div className=" flex flex-col items-end">
-          <div className="text-sm text-mine-shaft-300">{formatData(props.issueDate)}</div>
+          <div className="text-sm text-mine-shaft-300">
+            {formatData(props.issueDate)}
+          </div>
           <div className="text-sm text-mine-shaft-300">
             ID: {props.certificateId}
           </div>
         </div>
         {props.edit && (
-          <ActionIcon size="lg" variant="subtle" color="red.8">
+          <ActionIcon
+            onClick={handleDelete}
+            size="lg"
+            variant="subtle"
+            color="red.8"
+          >
             <Trash2 className="" />
           </ActionIcon>
         )}

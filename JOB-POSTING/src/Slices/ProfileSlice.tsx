@@ -13,7 +13,6 @@ const ProfileSlice = createSlice({
       state = action.payload;
       return state;
     },
-    
   }
 });
 

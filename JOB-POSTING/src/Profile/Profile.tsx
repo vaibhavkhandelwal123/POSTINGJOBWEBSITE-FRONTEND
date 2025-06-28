@@ -1,177 +1,86 @@
-import { ActionIcon, Divider, TagsInput, Textarea } from "@mantine/core";
-import { Edit2, Plus, Save } from "lucide-react";
-import ExpCard from "./ExpCard";
-import CertCard from "./CertCard";
-import { useEffect, useState } from "react";
-import ExpInput from "./ExpInput";
-import CertiInput from "./CertiInput";
+import {Avatar, Divider, FileInput, Overlay} from "@mantine/core";
+import { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../Services/ProfileService";
 import Info from "./Info";
-import { setProfile } from "../Slices/ProfileSlice";
+import { changeProfile, setProfile } from "../Slices/ProfileSlice";
+import About from "./About";
+import Skills from "./Skills";
+import Experience from "./Experience";
+import Certificate from "./Certificate";
+import { useHover } from "@mantine/hooks";
+import { Edit2 } from "lucide-react";
+import { NotificationSuccess } from "../SignUpLogin/NotificationAny";
+
 
 const Profile = () => {
   const dispatch = useDispatch();
   const user=useSelector((state: any) => state.user);
-  const profile = useSelector((state: any) => state.profile);
-  
-  const [edit, setEdit] = useState([false, false, false, false]);
-
-  const [exp, setExp] = useState(false);
-  const [certi, setCerti] = useState(false);
-
-  const handleEdit = (index: number) => {
-    const newEdit = [...edit];
-    newEdit[index] = !newEdit[index];
-    setEdit(newEdit);
-  };
-
+  const profile = useSelector((state:any)=>state.profile);
   useEffect(()=>{
     getProfile(user.id).then((data:any)=>{
       dispatch(setProfile(data));
     }).catch((error:any)=>{
       console.error(error);
     });
-  },[])
+  },[]);
+  const {hovered,ref}=useHover();
+  const handleFile = async (event:any) => {
+    const file = event.target.files && event.target.files[0];
+    let pictures: any = await getBase64(file);
+    let updatedProfile = { ...profile, pictures: pictures.split(',')[1] };
+    dispatch(changeProfile(updatedProfile));
+    NotificationSuccess("Success", "Profile Picture Updated Successfully");
+  };
+  const getBase64=(file:any)=>{
+    return new Promise((resolve,reject)=>{
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload=()=>resolve(reader.result);
+      reader.onerror=error=>reject(error);
+    })
+  }
   return (
     <div className="w-4/5 mx-auto">
       <div className="relative">
         <img
           className="rounded-t-2xl"
-          width={1200}
+          width={1100}
           src="/profile banner/banner.jpg"
         />
-        <img
-          className="h-48 w-48 absolute left-3 border-mine-shaft-950 border-8 -bottom-1/3 rounded-full"
-          src="/avatar-7.png"
-        />
+        <div ref={ref} className="absolute -bottom-1/3 left-3 flex items-center justify-center">
+          <Avatar
+            className="!h-48 !w-48 absolute border-mine-shaft-950 border-8 rounded-full"
+            src={profile.pictures ? `data:image/png;base64,${profile.pictures}` : "/avatar-7.png"}
+          />
+          {hovered && <Overlay className="!rounded-full" color="#000" backgroundOpacity={0.75} />}
+          {hovered && <Edit2 className="absolute z-[300] w-16 h-16 pointer-events-none" />}
+          <input
+            type="file"
+            onChange={handleFile}
+            style={{
+              display: hovered ? "block" : "none",
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              opacity: 0,
+              cursor: "pointer",
+              zIndex: 400,
+            }}
+            accept="image/png,image/jpeg"
+          />
+        </div>
       </div>
-      <div className="px-8 mt-16">
+      <div className="px-3 mt-16">
         <Info/>
         <Divider my="xl" size="sm" />
-        <div className="flex flex-col justify-between">
-          <div className="text-2xl font-semibold mb-3 flex justify-between">
-            About
-            <ActionIcon
-              onClick={() => handleEdit(0)}
-              size="lg"
-              variant="subtle"
-              color="bright-sun.4"
-            >
-              {edit[0] ? <Save className="" /> : <Edit2 className="" />}
-            </ActionIcon>
-          </div>
-          <div className="">
-            {edit[0] && (
-              <Textarea
-                value={about}
-                autosize
-                maxRows={3}
-                placeholder="write about yourself..."
-                onChange={(event) => setAbout(event.currentTarget.value)}
-              />
-            )}
-            {!edit[0] && (
-              <div className="text-sm text-mine-shaft-300 text-justify">
-                {profile?.about}
-              </div>
-            )}
-          </div>
-        </div>
+        <About/>
         <Divider my="xl" size="sm" />
-        <div className="">
-          <div className="text-2xl font-semibold mb-3 flex justify-between">
-            Skills
-            <ActionIcon
-              onClick={() => handleEdit(1)}
-              size="lg"
-              variant="subtle"
-              color="bright-sun.4"
-            >
-              {edit[1] ? <Save className="" /> : <Edit2 className="" />}
-            </ActionIcon>
-          </div>
-          {edit[1] ? (
-            <TagsInput
-              placeholder="add skills"
-              splitChars={[",", " ", "|"]}
-              value={skills}
-              onChange={setSkills}
-            />
-          ) : (
-            <div className="flex gap-2 flex-wrap">
-              {profile?.skills?.map((skill: any, index: number) => (
-                <div
-                  className="bg-bright-sun-300 bg-opacity-15 rounded-3xl text-bright-sun-400 px-3 py-1 gap-1 text-sm font-medium"
-                  key={index}
-                >
-                  {skill}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <Skills/>
         <Divider my="xl" size="sm" />
-        <div className="">
-          <div className="text-2xl font-semibold mb-5 flex justify-between">
-            Experience
-            <div className="flex gap-2">
-              <ActionIcon
-                onClick={() => setExp(true)}
-                size="lg"
-                variant="subtle"
-                color="bright-sun.4"
-              >
-                <Plus className="" size="large" />
-              </ActionIcon>
-              <ActionIcon
-                onClick={() => handleEdit(2)}
-                size="lg"
-                variant="subtle"
-                color="bright-sun.4"
-              >
-                {edit[2] ? <Save className="" /> : <Edit2 className="" />}
-              </ActionIcon>
-            </div>
-          </div>
-          <div className="flex flex-col gap-8">
-            {profile?.experiences?.map((exp: any, index: any) => (
-              <ExpCard key={index} {...exp} edit={edit[2]} />
-            ))}
-            {exp&&<ExpInput setEdit={setExp} add/>}
-          </div>
-        </div>
+        <Experience/>
         <Divider my="xl" size="sm" />
-        <div>
-          <div className="text-2xl font-semibold mb-5 flex justify-between">
-            Certifications
-            <div className="flex gap-2">
-
-            <ActionIcon
-                onClick={() => setCerti(true)}
-                size="lg"
-                variant="subtle"
-                color="bright-sun.4"
-              >
-                <Plus className="" size="large" />
-              </ActionIcon>
-            <ActionIcon
-              onClick={() => handleEdit(3)}
-              size="lg"
-              variant="subtle"
-              color="bright-sun.4"
-            >
-              {edit[3] ? <Save className="" /> : <Edit2 className="" />}
-            </ActionIcon>
-            </div>
-          </div>
-          <div className="flex flex-col gap-8">
-            {profile?.certifications?.map((cert: any, index: any) => (
-             <CertCard key={index} {...cert} edit={edit[3]}/>
-            ))}
-            {certi&&<CertiInput setEdit={setCerti}/>}
-          </div>
-        </div>
+        <Certificate/>
       </div>
     </div>
   );
