@@ -50,13 +50,21 @@ const ExpInput = (props: any) => {
     let exp = [...profile.experiences];
     if(props.add){
       exp.push(form.getValues());
-      exp[exp.length-1].startDate=exp[exp.length-1].startDate.toISOString();
-      exp[exp.length-1].endDate=exp[exp.length-1].endDate.toISOString();
+      exp[exp.length-1].startDate = new Date(exp[exp.length-1].startDate).toISOString();
+      if (!exp[exp.length-1].working && exp[exp.length-1].endDate) {
+        exp[exp.length-1].endDate = new Date(exp[exp.length-1].endDate).toISOString();
+      } else {
+        exp[exp.length-1].endDate = null;
+      }
     }
     else {
       exp[props.index] = form.getValues();
-      exp[props.index].startDate = exp[props.index].startDate.toISOString();
-      exp[props.index].endDate = exp[props.index].endDate.toISOString();
+      exp[props.index].startDate = new Date(exp[props.index].startDate).toISOString();
+      if (!exp[props.index].working && exp[props.index].endDate) {
+        exp[props.index].endDate = new Date(exp[props.index].endDate).toISOString();
+      } else {
+        exp[props.index].endDate = null;
+      }
     }
     let updatedProfile={...profile,experiences:exp};
      props.setEdit(false);

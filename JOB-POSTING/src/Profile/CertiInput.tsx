@@ -58,7 +58,7 @@ const CertiInput = (props: any) => {
             withAsterisk
             placeholder="Enter Name"
           />
-          <SelectInput form={form} name="issuer" {...select[1]} />
+          <SelectInput form={form} name="issuer" {...select[3]} />
         </div>
         <div className="flex gap-10 [&>*]:w-1/2">
           <MonthPickerInput
@@ -66,7 +66,7 @@ const CertiInput = (props: any) => {
             maxDate={new Date()}
             withAsterisk
             minDate={undefined}
-            label="End date"
+            label="Issue date"
             placeholder="Pick date"
           />
           <TextInput

@@ -11,13 +11,17 @@ import { setProfile } from "../Slices/ProfileSlice";
 const Header = () => {
   const user = useSelector((state:any) => state.user);
   const dispatch = useSelector((state:any) => state.dispatch);
-  useEffect(()=>{
-      getProfile(user.id).then((data:any)=>{
-        dispatch(setProfile(data));
-      }).catch((error:any)=>{
-        console.error(error);
-      });
-    },[]);
+  useEffect(() => {
+    if (user && user.id) {
+      getProfile(user.id)
+        .then((data: any) => {
+          dispatch(setProfile(data));
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
+  }, [user, dispatch]);
   const location = useLocation();
   return location.pathname!="/signup"&& location.pathname!="/login" && location.pathname!="/forgot" &&
     <div className="text-white flex justify-between items-center px-6 h-20  bg-mine-shaft-950 font-['poppins']">
