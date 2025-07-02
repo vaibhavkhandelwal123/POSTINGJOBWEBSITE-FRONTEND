@@ -1,28 +1,30 @@
 import { ActionIcon, Button, Divider } from "@mantine/core";
 import { Bookmark} from "lucide-react";
 import { Link } from "react-router-dom";
-import { card, desc, skills } from "../Data/JobDescData";
+import { card} from "../Data/JobDescData";
 import DomPurify from "dompurify";
+import { timeAgo } from "../Services/Utilities";
 const JobDesc = (props:any) => {
-  const description = DomPurify.sanitize(desc);
+  const description = DomPurify.sanitize(props.description);
+  const skillsRequired = props.skillsRequired ?? [];
   return (
     <div className="w-2/3">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
           <div className="p-3 bg-mine-shaft-800 rounded-xl">
-            <img className="h-14" src={`/Logos/Google.png`} alt="" />
+            <img className="h-14" src={`/Logos/${props.company}.png`} alt="" />
           </div>
           <div>
             <div className="font-semibold text-2xl ">
-              Software Developer |||
+              {props.jobTitle}
             </div>
             <div className="text-lg">
-              Google &#x2022; 3 days ago &#x2022; 120 Applicants
+              {props.company} &#x2022; Posted {timeAgo(props.postTime)} &#x2022; {props.applicants?props.applicants.length:0} Applicants
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-2 items-center">
-          <Link to="/apply-job">
+          <Link to={`/apply-job/${props.id}`}>
             <Button color="bright-sun.5" variant="light">
               {props.edit ? "Edit" : "Apply Now"}
             </Button>
@@ -47,7 +49,7 @@ const JobDesc = (props:any) => {
               <item.icon className="h-4/5 w-4/5" fontSize="large" />
             </ActionIcon>
             <div className="text-sm text-mine-shaft-300">{item.name}</div>
-            <div className="font-semibold">{item.value}</div>
+            <div className="font-semibold">{props[item.id] ? props[item.id] : "NA"} {item.id=="packageOffered" && props[item.id] ? "LPA" : ""}</div>
           </div>
         ))}
       </div>
@@ -55,9 +57,8 @@ const JobDesc = (props:any) => {
       <div>
         <div className="text-xl font-semibold mb-5">Required Skills</div>
         <div className="flex gap-2 flex-wrap">
-          {skills.map((item, index) => (
+          {skillsRequired.map((item: string) => (
             <ActionIcon
-              key={index}
               color="bright-sun.4"
               className="!h-fit !w-fit !text-sm font-medium "
               variant="light"
@@ -73,7 +74,7 @@ const JobDesc = (props:any) => {
       <Divider my="xl" />
       <div
         className="[&_h4]:text-xl [&_*]:text-mine-shaft-300 [&_li]:marker:text-bright-sun-400 [&_li]:mb-1 [&_h4]:my-5 [&_h4]:font-semibold [&_h4]:text-mine-shaft-200 [&_p]:text-justify"
-        dangerouslySetInnerHTML={{ __html: description }}
+        dangerouslySetInnerHTML={{ __html:description }}
       ></div>
       <Divider my="xl" />
       <div>
@@ -82,23 +83,23 @@ const JobDesc = (props:any) => {
           <div className="flex justify-between mb-3">
             <div className="flex items-center gap-2">
               <div className="p-3 bg-mine-shaft-800 rounded-xl">
-                <img className="h-8" src={`/Logos/Google.png`} alt="" />
+                <img className="h-8" src={`/Logos/${props.company}.png`} alt="" />
               </div>
               <div className="flex flex-col">
-                <div className="font-medium text-lg">Google</div>
+                <div className="font-medium text-lg">{props.company}</div>
                 <div className=" text-mine-shaft-300">10k+ Employees</div>
               </div>
-            </div>
-              <Link to="/company">
+              </div>
+              <Link to={`/company/${props.company}`}  >
                 <Button color="bright-sun.5" variant="light">
                   Company Page
                 </Button>
               </Link>
             </div>
             <div className="text-mine-shaft-300 text-justify">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi est dicta eos ratione sint rem, cumque molestias numquam qui mollitia quas dolorem enim hic repellendus necessitatibus! Dolor blanditiis repellat maiores nemo, accusantium illo mollitia? Eius incidunt reprehenderit officiis sed velit!
+              {props.about}
             </div>
-        </div>
+          </div>
       </div>
     </div>
   );

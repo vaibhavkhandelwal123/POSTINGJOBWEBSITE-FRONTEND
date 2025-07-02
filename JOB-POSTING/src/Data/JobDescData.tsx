@@ -2,10 +2,10 @@ import { BriefcaseBusiness, MapPin,  } from "lucide-react";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 const card=[
-    {name:"Location",icon:MapPin,value:"New York"},
-    {name:"Experience",icon:BriefcaseBusiness,value:"Expert"},
-    {name:"Salary",icon:CurrencyRupeeIcon,value:"48 LPA"},
-    {name:"Job Type",icon:WorkHistoryIcon,value:"Full Time"},
+    {name:"Location",icon:MapPin,value:"New York",id:"location"},
+    {name:"Experience",icon:BriefcaseBusiness,value:"Expert",id:"experience"},
+    {name:"Salary",icon:CurrencyRupeeIcon,value:"48 LPA",id:"packageOffered"},
+    {name:"Job Type",icon:WorkHistoryIcon,value:"Full Time",id:"jobType"},
 ]
 
 const skills=['React','JavaScript','Node.js','Express.js','MongoDB','Git','GitHub','RESTful APIs','Spring Boot'];

@@ -15,32 +15,38 @@ import Postjobs from "./Postjobs"
 import ProfilePage from "./ProfilePage"
 import SignUpPage from "./SignUpPage"
 import { useSelector } from "react-redux"
+import PostedJobsPage from "./PostedJobsPage"
 
 const AppRoutes = () => {
-    const user = useSelector((state:any)=>state.user);
-  return <BrowserRouter>
-              <div className="relative">
-                <Header />
-                <Scroll />
-                <Routes>
-                  <Route path="/find-jobs" element={<FindJobs />} />
-                  <Route path="/find-talent" element={<FindTalent />} />
-                  <Route path="/jobs" element={<JobDescPage />} />
-                  <Route path="/apply-job" element={<ApplyJob />} />
-                  <Route path="/company" element={<CompanyPage />} />
-                  <Route path="/posted-job" element={<Postjobs />} />
-                  <Route path="/job-history" element={<JobHistoryPage />} />
-                  <Route path="/post-job" element={<Postjobs />} />
-                  <Route path="/signup" element={user?<Navigate to="/"/>:<SignUpPage />} />
-                  <Route path="/login" element={user?<Navigate to="/"/>:<SignUpPage />} />
-                  <Route path="/talent-profile" element={<TalentProfile />} />
-                  <Route path="/profile" element={<ProfilePage />} />
-                  <Route path="/forgot" element={<Forgot />} />
-                  <Route path="*" element={<HomePage />} />
-                </Routes>
-                <Footer />
-              </div>
-            </BrowserRouter>
-}
+  const user = useSelector((state: any) => state.user);
 
-export default AppRoutes
+  return (
+    <BrowserRouter>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <Scroll />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/find-jobs" element={<FindJobs />} />
+            <Route path="/find-talent" element={<FindTalent />} />
+            <Route path="/jobs/:id" element={<JobDescPage />} />
+            <Route path="/apply-job/:id" element={<ApplyJob />} />
+            <Route path="/company" element={<CompanyPage />} />
+            <Route path="/posted-job" element={<PostedJobsPage />} />
+            <Route path="/job-history" element={<JobHistoryPage />} />
+            <Route path="/post-job" element={<Postjobs />} />
+            <Route path="/signup" element={user ? <Navigate to="/" /> : <SignUpPage />} />
+            <Route path="/login" element={user ? <Navigate to="/" /> : <SignUpPage />} />
+            <Route path="/talent-profile" element={<TalentProfile />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/forgot" element={<Forgot />} />
+            <Route path="*" element={<HomePage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
+  );
+};
+
+export default AppRoutes;

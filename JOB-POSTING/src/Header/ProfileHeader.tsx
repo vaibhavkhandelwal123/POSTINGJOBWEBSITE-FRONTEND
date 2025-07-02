@@ -8,10 +8,12 @@ import {
   Sun,
   UserCircle,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { removeUser } from "../Slices/UserSlice";
+import { getProfile } from "../Services/ProfileService";
+import { setProfile } from "../Slices/ProfileSlice";
 
 const ProfileHeader = () => {
   const user = useSelector((state:any) => state.user);
@@ -19,6 +21,17 @@ const ProfileHeader = () => {
   const [checked, setChecked] = useState(false);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+  useEffect(() => {
+      if (user && user.id) {
+        getProfile(user.id)
+          .then((data: any) => {
+            dispatch(setProfile(data));
+          })
+          .catch((error: any) => {
+            console.error(error);
+          });
+      }
+    }, [user, dispatch]);
   const handleLogout = () => {
     dispatch(removeUser());
   };

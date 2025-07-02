@@ -1,43 +1,106 @@
-import { Button, TagsInput } from "@mantine/core";
-import { fields } from "../Data/PostJobData";
+import { Button, NumberInput, TagsInput, Textarea } from "@mantine/core";
+import { content, fields } from "../Data/PostJobData";
 import SelectInput from "./SelectInput";
 import TestEditor from "./TestEditor";
+import { isNotEmpty, useForm } from "@mantine/form";
+import { postJob } from "../Services/JobService";
+import { NotificationError, NotificationSuccess } from "../SignUpLogin/NotificationAny";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Post = () => {
   const select = fields;
+  const form = useForm({
+    mode:'controlled',
+    validateInputOnChange: true,
+    initialValues: {
+      jobTitle: "",
+      company: "",
+      experience: "",
+      jobType: "",
+      location: "",
+      packageOffered: "",
+      skillsRequired: [],
+      about:'',
+      description:content 
+    },
+    validate:{
+      jobTitle:isNotEmpty("Title is required"),
+      company:isNotEmpty("Company name is required"),
+      experience:isNotEmpty("Experience is required"),
+      jobType:isNotEmpty("Job type is required"),
+      location:isNotEmpty("Location is required"),
+      packageOffered:isNotEmpty("Package offered is required"),
+      skillsRequired:isNotEmpty("Skills required is required"),
+      about:isNotEmpty("About is required"),
+      description:isNotEmpty("Description is required")
+    }
+  })
+  const navigate = useNavigate();
+  const handlePost = () =>{
+    form.validate();
+    if (!form.isValid()) {
+      return;
+    }
+    const data = form.values;
+    postJob(data).then((res)=>{
+      NotificationSuccess("Success", "Job posted successfully");
+      navigate("/posted-job");
+    }).catch((err)=>{
+      NotificationError("Error", err.response?.data?.errorMessage || "Failed to post job");
+    });
+  }
   return (
     <div className="w-4/5 mx-auto">
       <div className="text-2xl font-semibold mb-5">Post a Job</div>
       <div className="flex flex-col gap-5">
         <div className="flex gap-10 [&>*]:w-1/2">
-          <SelectInput {...select[0]} />
-          <SelectInput {...select[1]} />
+          <SelectInput form={form} name="jobTitle" {...select[0]} />
+          <SelectInput form={form} name="company" {...select[1]} />
         </div>
         <div className="flex gap-10 [&>*]:w-1/2">
-          <SelectInput {...select[2]} />
-          <SelectInput {...select[3]} />
+          <SelectInput form={form} name="experience" {...select[2]} />
+          <SelectInput form={form} name="jobType" {...select[3]} />
         </div>
         <div className="flex gap-10 [&>*]:w-1/2">
-          <SelectInput {...select[4]} />
-          <SelectInput {...select[5]} />
+          <SelectInput form={form} name="location" {...select[4]} />
+          <NumberInput label="Package Offered (in LPA)"
+            placeholder="Enter package offered"
+            min={0}
+            {...form.getInputProps("packageOffered")}
+            max={300}
+            name="packageOffered"
+            clampBehavior="strict"
+            hideControls
+            withAsterisk
+          />  
         </div>
         <TagsInput
           withAsterisk
+          {...form.getInputProps("skillsRequired")}
           label="Skills"
           placeholder="Enter skill"
           acceptValueOnBlur
           clearable
           splitChars={[",", " ", "|"]}
         />
-      
+      <Textarea
+                  {...form.getInputProps("about")}
+                  label="About"
+                  withAsterisk
+                  autosize
+                  {...form.getInputProps("about")}
+                  maxRows={3}
+                  placeholder="Enter about Job..."
+                />
       <div className="[&_button[data-active='true']]:!text-bright-sun-400 [&_button[data-active='true']]:bg-bright-sun-400/20">
-        <div className="text-sm font-medium">Job Description</div>
-        <TestEditor />
+        <div className="text-sm font-medium">Job Description<span className="text-red-500">*</span></div>
+        <TestEditor form={form} />
       </div>
       <div className="flex gap-4">
         <Button
           color="bright-sun.5"
           variant="light"
+          onClick={handlePost}
         >
           Publish Job
         </Button>
