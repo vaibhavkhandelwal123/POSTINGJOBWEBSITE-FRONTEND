@@ -1,15 +1,28 @@
-import { Button } from "@mantine/core"
+import { Button, Divider } from "@mantine/core"
 import { ArrowLeft } from "lucide-react"
-import { Link } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import ApplyJobComp from "../ApplyJob/ApplyJobComp"
+import { useEffect, useState } from "react"
+import { getJob } from "../Services/JobService"
 
 const ApplyJob = () => {
+   const {id} = useParams();
+    const [job,setJob] = useState<any>(null);
+    useEffect(()=>{
+      window.scrollTo(0, 0);
+      getJob(id).then((res) => {
+        setJob(res);
+      }).catch((error) => {
+        console.error("Failed to fetch job details", error);
+      })
+    },[id]);
+  const navigate = useNavigate();
   return (
     <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins'] p-4">
-        <Link className="my-4 inline-block" to="/jobs/">
-          <Button leftSection={<ArrowLeft size={20}/>} color="bright-sun.5" variant="light">Back</Button>
-        </Link>
-        <ApplyJobComp/>
+<Divider size="xs"/>
+          <Button onClick={() => navigate(-1)} my="md" leftSection={<ArrowLeft size={20}/>} color="bright-sun.5" variant="light">Back</Button>
+
+        <ApplyJobComp {...job}/>
     </div>
   )
 }
