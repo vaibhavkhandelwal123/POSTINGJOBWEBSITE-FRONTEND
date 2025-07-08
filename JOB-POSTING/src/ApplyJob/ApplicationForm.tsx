@@ -6,17 +6,19 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getBase64 } from '../Services/Utilities';
 import { applyJob } from '../Services/JobService';
 import { NotificationError, NotificationSuccess } from '../SignUpLogin/NotificationAny';
+import { useSelector } from 'react-redux';
 
 const ApplicationForm = () => {
     const [preview, setPreview] = useState(false);
   const [submit, setSubmit] = useState(false);
+  const user = useSelector((state:any) => state.user);
   const navigate = useNavigate();
   const {id}=useParams();
   
   const handleSubmit = async() => {
    setSubmit(true);
    let resume:any = await getBase64(form.getValues().resume);
-   let applicant ={...form.getValues(),resume: resume.split(',')[1]};
+   let applicant ={...form.getValues(),applicantId:user.id,resume: resume.split(',')[1]};
    applyJob(id, applicant).then((result) => {
       setSubmit(false);
       NotificationSuccess("Success", "Application submitted successfully");

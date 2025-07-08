@@ -1,12 +1,29 @@
 import { ActionIcon, Button, Divider } from "@mantine/core";
-import { Bookmark} from "lucide-react";
+import { Bookmark, BookMarkedIcon} from "lucide-react";
 import { Link } from "react-router-dom";
 import { card} from "../Data/JobDescData";
 import DomPurify from "dompurify";
 import { timeAgo } from "../Services/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../Slices/ProfileSlice";
 const JobDesc = (props:any) => {
+  const profile = useSelector((state:any) => state.profile);
   const description = DomPurify.sanitize(props.description);
   const skillsRequired = props.skillsRequired ?? [];
+  const dispatch = useDispatch();
+  const handleSaveJob = () => {
+      let savedJobs: any = [...(profile.savedJobs ?? [])];
+      if (savedJobs?.includes(props.id)) {
+        savedJobs = savedJobs?.filter((jobId:any) => jobId !== props.id);
+      } else {
+        savedJobs=[...savedJobs, props.id];
+      }
+      let updatedProfile = {
+        ...profile,
+        savedJobs: savedJobs,
+      }
+      dispatch(changeProfile(updatedProfile));
+    }
   return (
     <div className="w-2/3">
       <div className="flex justify-between">
@@ -24,15 +41,31 @@ const JobDesc = (props:any) => {
           </div>
         </div>
         <div className="flex flex-col gap-2 items-center">
-          <Link to={`/apply-job/${props.id}`}>
-            <Button color="bright-sun.5" variant="light">
-              {props.edit ? "Edit" : "Apply Now"}
+            {props.edit ? (
+            <Link to={`/apply-job/${props.id}`}>
+              <Button color="bright-sun.5" variant="light">
+              Edit
+              </Button>
+            </Link>
+            ) : props.applicants?.some((a: any) => a.applicantId === profile.id) ? (
+            <Button color="green.4" variant="light">
+              Applied
             </Button>
-          </Link>
+            ) : (
+            <Link to={`/apply-job/${props.id}`}>
+              <Button color="bright-sun.5" variant="light">
+              Apply Now
+              </Button>
+            </Link>
+            )}
 
           {props.edit ? <Button color="red.5" variant="outline">
               Delete
-            </Button>: <Bookmark size={20} className="text-bright-sun-400 cursor-pointer" />}
+            </Button>: profile.savedJobs?.includes(props.id)?
+            <BookMarkedIcon onClick={handleSaveJob} size={20}  className="cursor-pointer text-bright-sun-400" />
+          :
+            <Bookmark onClick={handleSaveJob} size={20}  className="text-mine-shaft-300 cursor-pointer hover:text-bright-sun-400" />
+          }
         </div>
       </div>
       <Divider my="xl" />
