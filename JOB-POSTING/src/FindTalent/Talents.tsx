@@ -1,8 +1,20 @@
-import { talents } from "../Data/TalentData";
+import { useEffect, useState } from "react";
 import Sort from "../FindJobs/Sort";
 import TalentCard from "./TalentCard";
+import { getAllProfiles } from "../Services/ProfileService";
+import { talents } from "../Data/TalentData";
 
 const Talents = () => {
+  //  const [talentList, setTalentList] = useState([{}]);
+  //  useEffect(()=>{
+  //   getAllProfiles().then((res)=>{
+  //     console.log("Fetched talents", res);
+  //     setTalentList(res);
+  //   }).catch((error)=>{
+  //     console.log("Failed to fetch talents", error);
+  //   });
+  //  },[])
+
   return (
     <div className="p-5 ">
       <div className="flex justify-between items-center">

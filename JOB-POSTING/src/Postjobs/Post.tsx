@@ -6,8 +6,10 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { postJob } from "../Services/JobService";
 import { NotificationError, NotificationSuccess } from "../SignUpLogin/NotificationAny";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Post = () => {
+  const user = useSelector((state:any) => state.user);
   const select = fields;
   const form = useForm({
     mode:'controlled',
@@ -41,10 +43,19 @@ const Post = () => {
     if (!form.isValid()) {
       return;
     }
-    const data = form.values;
+    const data = {...form.getValues(),postedBy:user.id,jobStatus:"ACTIVE"};
     postJob(data).then((res)=>{
       NotificationSuccess("Success", "Job posted successfully");
-      navigate("/posted-job");
+      navigate(`/posted-job/${res.id}`);
+    }).catch((err)=>{
+      NotificationError("Error", err.response?.data?.errorMessage || "Failed to post job");
+    });
+  }
+   const handleDraft = () =>{
+    const data = {...form.getValues(),postedBy:user.id,jobStatus:"DRAFT"};
+    postJob(data).then((res)=>{
+      NotificationSuccess("Success", "Job saved as draft");
+      navigate(`/posted-job/${res.id}`);
     }).catch((err)=>{
       NotificationError("Error", err.response?.data?.errorMessage || "Failed to post job");
     });
@@ -107,6 +118,7 @@ const Post = () => {
         <Button
           color="bright-sun.5"
           variant="outline"
+          onClick={handleDraft}
         >
           Save as Draft
         </Button>

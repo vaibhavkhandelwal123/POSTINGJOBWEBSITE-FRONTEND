@@ -30,4 +30,21 @@ const applyJob = async (jobId:any, applicant:any) => {
         throw error;
     });
 }
-export {getJob,getAllJobs,postJob,applyJob};
+
+const getJobPostedBy = async (userId: any) => {
+    return await axios.get(`${base_url}getJobPostedBy/${userId}`)
+    .then(result => result.data)
+    .catch(error => {
+        throw error;
+    });
+}
+
+const changeAppStatus = async (applicant:any) => {
+    return await axios.put(`${base_url}changeAppStatus`, applicant)
+    .then(result => result.data)
+    .catch(error => {
+        throw error;
+    });
+}
+
+export {getJob,getAllJobs,postJob,applyJob,getJobPostedBy,changeAppStatus};

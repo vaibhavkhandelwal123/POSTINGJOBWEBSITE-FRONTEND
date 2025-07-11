@@ -8,18 +8,19 @@ import { Link } from "react-router-dom";
 const TalentCard = (props: any) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [value, setValue] = useState<string | null>(null);
+  
   const ref = useRef<HTMLInputElement>(null);
   return (
     <div className="bg-mine-shaft-900 p-4 w-96 flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
           <div className="p-2 bg-mine-shaft-800 rounded-full">
-            <Avatar size="lg" src={`/${props.image}.png`} alt="" />
+            <Avatar size="lg" src={props.pictures ? `data:image/png;base64,${props.pictures}` : "/avatar-7.png"} alt="" />
           </div>
           <div>
             <div className="font-semibold text-lg">{props.name}</div>
             <div className="text-sm text-mine-shaft-300">
-              {props.role} &bull; {props.company}
+              {props.jobTitle} &bull; {props.company}
             </div>
           </div>
         </div>
@@ -28,7 +29,7 @@ const TalentCard = (props: any) => {
         </div>
       </div>
       <div className="flex gap-2 [&>div]:px-2 [&>div]:py-1 [&>div]:bg-mine-shaft-800 [&>div]:text-bright-sun-400 [&>div]:rounded-lg [&>div]:text-xs">
-        {props.topskills?.map((skill: any, index: any) => (
+        {props.topSkills?.map((skill: any, index: any) => (
           <div key={index}>{skill}</div>
         ))}
       </div>

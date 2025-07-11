@@ -40,7 +40,7 @@ const ApplicationForm = () => {
     mode:'controlled',
     validateInputOnChange: true,
     initialValues:{
-        fullName: '',
+        name: '',
         email: '',
         phone: '',
         website: '',
@@ -48,7 +48,7 @@ const ApplicationForm = () => {
         coverLetter: ''
     },
     validate:{
-        fullName:isNotEmpty('Full name is required'),
+        name:isNotEmpty('Full name is required'),
         email:isNotEmpty('Email is required'),
         phone:isNotEmpty('Phone number is required'),
         website:isNotEmpty('Personal website is required'),
@@ -69,11 +69,10 @@ const ApplicationForm = () => {
         <div className="flex flex-col gap-5">
           <div className="flex gap-10 [&>*]:w-1/2">
             <TextInput
-              className={`${
-                preview ? "text-mine-shaft-300 font-semibold" : ""
+              className={`${preview ? "text-mine-shaft-300 font-semibold" : ""
               }`}
               readOnly={preview}
-              {...form.getInputProps('fullName')}
+              {...form.getInputProps('name')}
               variant={preview ? "unstyled" : "default"}
               label="Full Name"
               withAsterisk
