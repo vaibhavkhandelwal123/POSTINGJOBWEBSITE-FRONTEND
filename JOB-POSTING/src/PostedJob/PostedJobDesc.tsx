@@ -1,12 +1,11 @@
 import { Badge, Tabs } from "@mantine/core";
 import JobDesc from "../JobDesc/JobDesc";
-import { talents } from "../Data/TalentData";
 import TalentCard from "../FindTalent/TalentCard";
 
 const PostedJobDesc = (props:any) => {
   return (
     <div className="mt-5 w-3/4 px-5">
-      <div className="text-2xl font-semibold flex items-center">
+      {props.jobTitle?<><div className="text-2xl font-semibold flex items-center">
         {props.jobTitle}
       </div>
       <Badge variant="light" ml="sm" color="bright-sun.4" size="sm">
@@ -38,12 +37,27 @@ const PostedJobDesc = (props:any) => {
           <Tabs.Panel value="invited">
             <div className="mt-10 flex flex-wrap gap-5  justify-around">
               {props.applicants?.filter((x:any)=>x.applicationStatus=="INTERVIEWING").map((talent:any, index:any) => (
-                <TalentCard key={index} {...talent} posted />
+                <TalentCard key={index} {...talent} invited />
               ))}
             </div>
           </Tabs.Panel>
+          <Tabs.Panel value="offered">
+            <div className="mt-10 flex flex-wrap gap-5  justify-around">
+              {props.applicants?.filter((x:any)=>x.applicationStatus=="OFFERED").map((talent:any, index:any) => (
+                <TalentCard key={index} {...talent} offered />
+              ))}
+            </div>
+          </Tabs.Panel>
+          <Tabs.Panel value="rejected">
+            <div className="mt-10 flex flex-wrap gap-5  justify-around">
+              {props.applicants?.filter((x:any)=>x.applicationStatus=="REJECTED").map((talent:any, index:any) => (
+                <TalentCard key={index} {...talent} rejected />
+              ))}
+            </div>
+          </Tabs.Panel>
+          
         </Tabs>
-      </div>
+      </div></>:<div className="text-2xl flex justify-center items-center min-h-[70vh] font-semibold">No Job Selected</div>}
     </div>
   );
 };

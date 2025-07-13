@@ -1,26 +1,91 @@
 import { Avatar, Button, Divider, Modal, Text } from "@mantine/core";
-import { DateInput, TimeInput } from "@mantine/dates";
+import { DateInput, PickerControl, TimeInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import { CalendarDaysIcon, Heart, MapPin } from "lucide-react";
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { getProfile } from "../Services/ProfileService";
+import { changeAppStatus } from "../Services/JobService";
+import {
+  NotificationError,
+  NotificationSuccess,
+} from "../SignUpLogin/NotificationAny";
+import { formatInterviewTime, openResume } from "../Services/Utilities";
 
 const TalentCard = (props: any) => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [app,{open:openApp,close:closeApp}]=useDisclosure(false);
   const [opened, { open, close }] = useDisclosure(false);
-  const [value, setValue] = useState<string | null>(null);
-  
+  const [date, setDate] = useState<Date | null>(null);
+  const [time, setTime] = useState<any | null>(null);
+  const [profile, setProfile] = useState<any>({});
+  const [job, setJob] = useState<any>({});
+  useEffect(() => {
+    if (props.applicantId)
+      getProfile(props.applicantId)
+        .then((res: any) => {
+          setProfile(res);
+          if (res && res.length > 0 && Number(id) == 0)
+            navigate(`/posted-job/${res[0].id}`);
+          setJob(res.find((item: any) => item.id === Number(id)));
+        })
+        .catch((err: any) => {
+          console.error("Error fetching profile:", err);
+        });
+    else setProfile(props);
+  }, []);
   const ref = useRef<HTMLInputElement>(null);
+  const handleOffer = (status: string) => {
+    if (status=="INTERVIEWING" && (!date || !time)) {
+      NotificationError("Error", "Please select both date and time.");
+      return;
+    }
+    let interview: any = {
+      id,
+      applicantId: profile.id,
+      applicationStatus: status
+    };
+    if(status=="INTERVIEWING"){
+      const [hours, minutes] = time.split(":").map(Number);
+      const interviewDate = new Date(date);
+      interviewDate.setHours(hours, minutes);
+      interview={...interview,interviewTime:date}
+    }
+    changeAppStatus(interview)
+      .then((res: any) => {
+        if(status=="INTERVIEWING")NotificationSuccess("Interview Scheduled", "Interview scheduled successfully");
+        else if(status=="OFFERED")NotificationSuccess("Offered", "Offer had sent successfully");
+        else NotificationSuccess("Rejected", "Applicant has been Rejected");
+        window.location.reload();
+      })
+      .catch((err: any) => {
+        console.error("Error changing application status:", err);
+        NotificationError(
+          "Error",
+          "Failed to schedule interview. Please try again later."
+        );
+      });
+  };
   return (
     <div className="bg-mine-shaft-900 p-4 w-96 flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
           <div className="p-2 bg-mine-shaft-800 rounded-full">
-            <Avatar size="lg" src={props.pictures ? `data:image/png;base64,${props.pictures}` : "/avatar-7.png"} alt="" />
+            <Avatar
+              size="lg"
+              src={
+                profile?.pictures
+                  ? `data:image/png;base64,${profile?.pictures}`
+                  : "/avatar-7.png"
+              }
+              alt=""
+            />
           </div>
           <div>
             <div className="font-semibold text-lg">{props.name}</div>
             <div className="text-sm text-mine-shaft-300">
-              {props.jobTitle} &bull; {props.company}
+              {profile?.jobTitle} &bull; {profile?.company}
             </div>
           </div>
         </div>
@@ -29,52 +94,56 @@ const TalentCard = (props: any) => {
         </div>
       </div>
       <div className="flex gap-2 [&>div]:px-2 [&>div]:py-1 [&>div]:bg-mine-shaft-800 [&>div]:text-bright-sun-400 [&>div]:rounded-lg [&>div]:text-xs">
-        {props.topSkills?.map((skill: any, index: any) => (
-          <div key={index}>{skill}</div>
-        ))}
+        {profile?.skills?.map((skill: any, index: any) =>
+          index < 4 ? <div key={index}>{skill}</div> : null
+        )}
       </div>
       <div>
         <Text
           lineClamp={2}
           className="!text-xs text-justify !text-mine-shaft-300"
         >
-          {props.about}
+          {profile?.about}
         </Text>
       </div>
       <Divider color="mine-shaft.5" />
       {props.invited ? (
         <div className="flex gap-1 text-mine-shaft-200 text-sm items-center">
-          <CalendarDaysIcon /> Interview: August 27, 2024 10:00 AM
+          <CalendarDaysIcon /> Interview:{" "}
+          {props.interviewTime
+            ? formatInterviewTime(props.interviewTime)
+            : "Not scheduled"}
         </div>
       ) : (
         <div className="flex justify-between items-center">
-          <div className="font-semibold text-mine-shaft-200">
-            {props.expectedCtc}
-          </div>
+          <div className="font-semibold text-mine-shaft-200">23 LPA</div>
           <div className="flex gap-1 items-center text-mine-shaft-400 text-xs">
             <MapPin className=" h-5 w-5" />
-            {props.location}
+            {profile?.location}
           </div>
         </div>
       )}
-      <Divider color="mine-shaft.5" />
-        {props.invited ? (
-          <div>
-            <div className="flex [&>*]:w-1/2 [&>*]:p-1 gap-2">
-            <Button color="bright-sun.5" variant="outline" fullWidth>
+      
+      {props.invited ? (
+        <>
+        <Divider color="mine-shaft.5" />
+        <div>
+          <div className="flex [&>*]:w-1/2 [&>*]:p-1 gap-2">
+            <Button onClick={()=>handleOffer("OFFERED")} color="bright-sun.5" variant="outline" fullWidth>
               Accept
             </Button>
-            <Button color="bright-sun.5" variant="light" fullWidth>
-                  Reject
-                </Button>
+            <Button onClick={()=>handleOffer("REJECTED")} color="bright-sun.5" variant="light" fullWidth>
+              Reject
+            </Button>
           </div>
-          </div>
-        ) : (
-          <div>
-            <div className="flex [&>*]:w-1/2 [&>*]:p-1">
+        </div>
+        </>
+      ) : (
+        <div>
+          <div className="flex [&>*]:w-1/2 [&>*]:p-1">
             <Link to="/talent-profile">
               <Button color="bright-sun.5" variant="outline" fullWidth>
-                Profle
+                Profile
               </Button>
             </Link>
             <div>
@@ -95,8 +164,14 @@ const TalentCard = (props: any) => {
               )}
             </div>
           </div>
-          </div>
-        )}
+        </div>
+      )}
+      {(props.invited ||
+        props.posted )&&
+          <Button onClick={openApp} color="bright-sun.4" variant="light" fullWidth>
+            View Application
+          </Button>
+        }
       <Modal
         opened={opened}
         onClose={close}
@@ -105,20 +180,51 @@ const TalentCard = (props: any) => {
       >
         <div className="flex flex-col gap-4">
           <DateInput
-            value={value}
+            value={date}
             minDate={new Date()}
-            onChange={setValue}
+            onChange={(value) => setDate(value ? new Date(value) : null)}
             label="Date"
             placeholder="Enter Date"
           />
           <TimeInput
             label="Time"
             ref={ref}
+            minTime=""
+            value={time}
+            onChange={(event) => setTime(event.currentTarget.value)}
             onClick={() => ref.current?.showPicker()}
           />
-          <Button color="bright-sun.5" variant="light" fullWidth>
+          <Button
+            onClick={() => {
+              handleOffer("INTERVIEWING");
+            }}
+            color="bright-sun.5"
+            variant="light"
+            fullWidth
+          >
             Schedule
           </Button>
+        </div>
+      </Modal>
+      <Modal
+        opened={app}
+        onClose={closeApp}
+        title="Application"
+        centered
+      >
+        <div className="flex flex-col gap-4">
+          <div>
+            Email: &emsp;<a className="text-bright-sun-400 hover:underline cursor-pointer text-center" href={`mailto:${props.email}`}>{props.email}</a>
+          </div>
+          <div>
+            Website: &emsp;<a target="_blank" className="text-bright-sun-400 hover:underline cursor-pointer text-center" href={props.website}>{props.website}</a>
+          </div>
+          <div>
+            Resume: &emsp;<span onClick={()=>openResume(props.resume)} className="text-bright-sun-400 hover:underline cursor-pointer text-center" >{props.name}</span>
+          </div>
+          <div>
+            CoverLetter: &emsp;<div className="" >{props.coverLetter}</div>
+          </div>
         </div>
       </Modal>
     </div>

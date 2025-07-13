@@ -5,20 +5,20 @@ import { getAllProfiles } from "../Services/ProfileService";
 import { talents } from "../Data/TalentData";
 
 const Talents = () => {
-  //  const [talentList, setTalentList] = useState([{}]);
-  //  useEffect(()=>{
-  //   getAllProfiles().then((res)=>{
-  //     console.log("Fetched talents", res);
-  //     setTalentList(res);
-  //   }).catch((error)=>{
-  //     console.log("Failed to fetch talents", error);
-  //   });
-  //  },[])
+   const [talentList, setTalentList] = useState([{}]);
+   useEffect(()=>{
+    getAllProfiles().then((res)=>{
+      console.log("Fetched talents", res);
+      setTalentList(res);
+    }).catch((error)=>{
+      console.log("Failed to fetch talents", error);
+    });
+   },[])
 
   return (
     <div className="p-5 ">
       <div className="flex justify-between items-center">
-        <div className="text-2xl font-semibold">Recommanded Jobs</div>
+        <div className="text-2xl font-semibold">Recommanded Profiles</div>
         <Sort />
       </div>
       <div className="mt-10 flex flex-wrap gap-5 justify-around">

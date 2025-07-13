@@ -33,4 +33,33 @@ const getBase64=(file:any)=>{
       reader.onerror=error=>reject(error);
     })
   }
-export {formatData,timeAgo,getBase64};
+
+  const formatInterviewTime=(dateStr:any)=>{
+    const date = new Date(dateStr);
+    return date.toLocaleString('en-US', {
+      year: 'numeric',
+      month:'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    });
+  }
+
+  function openResume(base64String:string) { 
+  if (base64String.startsWith("data:")) {
+    base64String = base64String.split(",")[1];
+  }
+
+  const byteCharacters = atob(base64String);
+  const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) =>
+    byteCharacters.charCodeAt(i)
+  );
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], { type: "application/pdf" });
+
+  const blobUrl = URL.createObjectURL(blob);
+  window.open(blobUrl, "_blank");
+}
+
+export {formatData,timeAgo,getBase64,formatInterviewTime,openResume};
