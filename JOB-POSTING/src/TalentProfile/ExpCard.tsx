@@ -1,3 +1,5 @@
+import { formatData } from "../Services/Utilities";
+
 const ExpCard = (props:any) => {
   return (
     <div className="flex flex-col gap-2">
@@ -14,7 +16,7 @@ const ExpCard = (props:any) => {
           </div>
         </div>
         <div className="text-sm text-mine-shaft-300">
-          {props.start_date} - {props.end_date}
+          {formatData(props.startDate)} - {formatData(props.endDate)}
         </div>
       </div>
       <div className="text-sm text-justify text-mine-shaft-300">

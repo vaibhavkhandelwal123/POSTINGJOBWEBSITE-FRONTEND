@@ -1,3 +1,5 @@
+import { formatData } from "../Services/Utilities";
+
 const CertCard = (props:any) => {
     return (
         <div className="flex justify-between">
@@ -6,15 +8,15 @@ const CertCard = (props:any) => {
               <img className="h-8 w-8" src={`/Logos/${props.issuer}.png`} alt="" />
             </div>
             <div className="flex flex-col">
-              <div className="font-semibold">{props.name}</div>
+              <div className="font-semibold">{props.title}</div>
               <div className="text-sm text-mine-shaft-300">
               {props.issuer}
             </div>
             </div>
           </div>
           <div className=" flex flex-col items-end">
-            <div className="text-sm text-mine-shaft-300">{props.issue_date}</div>
-            <div className="text-sm text-mine-shaft-300">ID: {props.certification_id}</div>
+            <div className="text-sm text-mine-shaft-300">Issue Date : {formatData(props.issueDate)}</div>
+            <div className="text-sm text-mine-shaft-300">ID: {props.certificateId}</div>
           </div>
         </div>
         

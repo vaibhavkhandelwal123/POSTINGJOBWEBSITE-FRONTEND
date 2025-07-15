@@ -1,6 +1,6 @@
 import axios from "axios";
 const base_url = "http://localhost:8080/profiles/";
-const getProfile=async (id:number)=>{
+const getProfile=async (id:any)=>{
         return await axios.get(`${base_url}get/${id}`)
         .then(result => result.data)
         .catch(error => {

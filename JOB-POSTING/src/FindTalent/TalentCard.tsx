@@ -1,9 +1,9 @@
 import { Avatar, Button, Divider, Modal, Text } from "@mantine/core";
-import { DateInput, PickerControl, TimeInput } from "@mantine/dates";
+import { DateInput, TimeInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import { CalendarDaysIcon, Heart, MapPin } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProfile } from "../Services/ProfileService";
 import { changeAppStatus } from "../Services/JobService";
 import {
@@ -83,7 +83,7 @@ const TalentCard = (props: any) => {
             />
           </div>
           <div>
-            <div className="font-semibold text-lg">{props.name}</div>
+            <div className="font-semibold text-lg">{profile.name}</div>
             <div className="text-sm text-mine-shaft-300">
               {profile?.jobTitle} &bull; {profile?.company}
             </div>
@@ -141,7 +141,7 @@ const TalentCard = (props: any) => {
       ) : (
         <div>
           <div className="flex [&>*]:w-1/2 [&>*]:p-1">
-            <Link to="/talent-profile">
+            <Link to={`/talent-profile/${profile?.id}`}>
               <Button color="bright-sun.5" variant="outline" fullWidth>
                 Profile
               </Button>

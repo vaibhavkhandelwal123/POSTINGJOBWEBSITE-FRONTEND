@@ -1,19 +1,19 @@
 import { Button, Divider } from "@mantine/core"
 import { ArrowLeft } from "lucide-react"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Profile from "../TalentProfile/Profile"
-import { profile } from "../Data/TalentData"
 import RecommendTalent from "../TalentProfile/RecommendTalent"
 
 const TalentProfile = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins'] p-4">
         <Divider size="xs"/>
-        <Link className="my-4 inline-block" to="/find-talent">
-          <Button leftSection={<ArrowLeft size={20}/>} color="bright-sun.5" variant="light">Back</Button>
-        </Link>
+        
+          <Button leftSection={<ArrowLeft size={20}/>} my="sm" onClick={()=>navigate(-1)} color="bright-sun.5" variant="light">Back</Button>
+      
         <div className="flex gap-5">
-            <Profile {...profile}/>
+            <Profile/>
             <RecommendTalent/>
         </div>
     </div>

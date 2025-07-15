@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import Sort from "../FindJobs/Sort";
-import TalentCard from "./TalentCard";
 import { getAllProfiles } from "../Services/ProfileService";
-import { talents } from "../Data/TalentData";
+import NewTalentCard from "./NewTalentCard";
+import { useSelector } from "react-redux";
 
 const Talents = () => {
+  const user = useSelector((state:any)=>state.user);
    const [talentList, setTalentList] = useState([{}]);
    useEffect(()=>{
     getAllProfiles().then((res)=>{
@@ -22,9 +23,7 @@ const Talents = () => {
         <Sort />
       </div>
       <div className="mt-10 flex flex-wrap gap-5 justify-around">
-        {
-            talents.map((talent, index) => <TalentCard key={index} {...talent} />
-       ) }
+        {talentList.map((profile:any, index:number) => profile.id!=user.id && <NewTalentCard key={index} {...profile}/>)}
       </div>
     </div>
   );
