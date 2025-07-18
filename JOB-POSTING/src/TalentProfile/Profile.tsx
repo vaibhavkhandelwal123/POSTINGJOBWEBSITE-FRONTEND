@@ -27,7 +27,7 @@ const Profile = () => {
         />
       </div>
       <div className="px-8 mt-16">
-        <div className={`text-3xl font-semibold flex justify-between items-center ${window.innerWidth < 768 ? 'mt-16' : 'mt-28'}`}>
+        <div className={`text-3xl font-semibold flex justify-between gap-5 items-center ${window.innerWidth < 768 ? 'mt-16' : 'mt-28'}`}>
           {profile?.name}
           <Button color="bright-sun.4" variant="light" fullWidth>
             Message

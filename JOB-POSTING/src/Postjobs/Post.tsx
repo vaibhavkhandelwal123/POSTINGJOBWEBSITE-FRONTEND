@@ -3,14 +3,31 @@ import { content, fields } from "../Data/PostJobData";
 import SelectInput from "./SelectInput";
 import TestEditor from "./TestEditor";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { postJob } from "../Services/JobService";
+import { getJob, postJob } from "../Services/JobService";
 import { NotificationError, NotificationSuccess } from "../SignUpLogin/NotificationAny";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const Post = () => {
+  const {id} = useParams();
+  const [editData,setEditData]=useState(content);
   const user = useSelector((state:any) => state.user);
   const select = fields;
+  useEffect(()=>{
+    window.scrollTo(0,0);
+    if(id!=="0"){
+      getJob(id).then((res)=>{
+        form.setValues(res);
+        setEditData(res.description);
+      }).catch((err)=>{
+        console.log(err);
+      })
+    }else{
+      form.reset();
+      setEditData(content); 
+    }
+  },[id])
   const form = useForm({
     mode:'controlled',
     validateInputOnChange: true,
@@ -43,7 +60,7 @@ const Post = () => {
     if (!form.isValid()) {
       return;
     }
-    const data = {...form.getValues(),postedBy:user.id,jobStatus:"ACTIVE"};
+    const data = {...form.getValues(),id,postedBy:user.id,jobStatus:"ACTIVE"};
     postJob(data).then((res)=>{
       NotificationSuccess("Success", "Job posted successfully");
       navigate(`/posted-job/${res.id}`);
@@ -52,7 +69,7 @@ const Post = () => {
     });
   }
    const handleDraft = () =>{
-    const data = {...form.getValues(),postedBy:user.id,jobStatus:"DRAFT"};
+    const data = {...form.getValues(),id,postedBy:user.id,jobStatus:"DRAFT"};
     postJob(data).then((res)=>{
       NotificationSuccess("Success", "Job saved as draft");
       navigate(`/posted-job/${res.id}`);
@@ -105,7 +122,7 @@ const Post = () => {
                 />
       <div className="[&_button[data-active='true']]:!text-bright-sun-400 [&_button[data-active='true']]:bg-bright-sun-400/20">
         <div className="text-sm font-medium">Job Description<span className="text-red-500">*</span></div>
-        <TestEditor form={form} />
+        <TestEditor form={form} data={editData}/>
       </div>
       <div className="flex gap-4">
         <Button

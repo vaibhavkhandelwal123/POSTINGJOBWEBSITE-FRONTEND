@@ -45,6 +45,7 @@ const NewTalentCard = (props: any) => {
       </div>
       <Divider color="mine-shaft.5" />
         <div className="flex justify-between items-center">
+          <div className=" text-mine-shaft-300"> Exp: {props.totalExp?props.totalExp:1} {props.totalExp>1?"Years":"Year"}</div>
           <div className="flex gap-1 items-center text-mine-shaft-400 text-xs">
             <MapPin className=" h-5 w-5" />
             {profile?.location}

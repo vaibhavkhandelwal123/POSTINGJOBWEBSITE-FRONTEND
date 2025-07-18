@@ -5,9 +5,7 @@ const UserSlice = createSlice({
   reducers: {
     findJobs: (state) => {
         return state;
-    },
-
-    
+    }
   }
 });
 

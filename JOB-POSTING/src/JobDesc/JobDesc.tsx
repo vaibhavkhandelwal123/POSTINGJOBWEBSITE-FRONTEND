@@ -6,6 +6,8 @@ import DomPurify from "dompurify";
 import { timeAgo } from "../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
+import { postJob } from "../Services/JobService";
+import { NotificationError, NotificationSuccess } from "../SignUpLogin/NotificationAny";
 const JobDesc = (props:any) => {
   const profile = useSelector((state:any) => state.profile);
   const description = DomPurify.sanitize(props.description);
@@ -24,6 +26,14 @@ const JobDesc = (props:any) => {
       }
       dispatch(changeProfile(updatedProfile));
     }
+
+    const handleCloseButton=()=>{
+      postJob({...props,jobStatus:"CLOSED"}).then((res)=>{
+        NotificationSuccess("Success","Job Closed Successfully");
+      }).catch((err)=>{
+        NotificationError("Error",err.response.data.errorMessage);
+      })
+    }
   return (
     <div className="w-2/3">
       <div className="flex justify-between">
@@ -41,8 +51,13 @@ const JobDesc = (props:any) => {
           </div>
         </div>
         <div className="flex flex-col gap-2 items-center">
-            {props.edit ? (
-            <Link to={`/apply-job/${props.id}`}>
+          
+            {props.jobStatus=="CLOSED" ?
+             <Link to={props.edit?`/post-job/${props.id}`:`/apply-job/${props.id}`}><Button color="bright-sun.5" variant="light">
+              Re-Open
+              </Button>
+              </Link>:props.edit ? (
+            <Link to={props.edit?`/post-job/${props.id}`:`/apply-job/${props.id}`}>
               <Button color="bright-sun.5" variant="light">
               Edit
               </Button>
@@ -59,8 +74,8 @@ const JobDesc = (props:any) => {
             </Link>
             )}
 
-          {props.edit ? <Button color="red.5" variant="outline">
-              Delete
+          {props.edit && props.jobStatus!="CLOSED"? <Button onClick={handleCloseButton} color="red.5" variant="outline">
+              Close
             </Button>: profile.savedJobs?.includes(props.id)?
             <BookMarkedIcon onClick={handleSaveJob} size={20}  className="cursor-pointer text-bright-sun-400" />
           :
