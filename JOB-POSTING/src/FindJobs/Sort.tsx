@@ -4,8 +4,8 @@ import { LucideSettings2 } from "lucide-react";
 const opt = [
   "Relavance",
   "Most Recent",
-  "Salary: Low to High",
-  "Salary: High to Low",
+  "Experience: Low to High",
+  "Experience: High to Low",
 ];
 
 const Sort = () => {

@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronsUpDown } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { updateFilter } from "../Slices/FilterSlice";
 
 const MultiInput = (props: any) => {
+  const dispatch = useDispatch();
   useEffect(() => {
     setData(props.options);
   });
@@ -32,18 +35,22 @@ const MultiInput = (props: any) => {
     if (val === "$create") {
       setData((current) => [...current, search]);
       setValue((current) => [...current, search]);
+      dispatch(updateFilter({[props.title]:[...value,search]}))
     } else {
+      dispatch(updateFilter({[props.title]:value.includes(val)?value.filter((v)=>v!== val):[...value,val]}))
       setValue((current) =>
         current.includes(val)
           ? current.filter((v) => v !== val)
           : [...current, val]
+
       );
     }
   };
 
-  const handleValueRemove = (val: string) =>
+  const handleValueRemove = (val: string) =>{
+      dispatch(updateFilter({[props.title]:value.filter((v)=>v!==val)}))
     setValue((current) => current.filter((v) => v !== val));
-
+  }
   const filteredData = data.filter((item) =>
     item.toLowerCase().includes(search.trim().toLowerCase())
   );

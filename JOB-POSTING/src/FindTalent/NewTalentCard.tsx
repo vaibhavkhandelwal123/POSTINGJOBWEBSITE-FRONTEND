@@ -1,7 +1,6 @@
 import { Avatar,Button,Divider,Text } from "@mantine/core";
 import { Heart, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
-import { profile } from "../Data/TalentData";
 
 const NewTalentCard = (props: any) => {
   return (
@@ -48,7 +47,7 @@ const NewTalentCard = (props: any) => {
           <div className=" text-mine-shaft-300"> Exp: {props.totalExp?props.totalExp:1} {props.totalExp>1?"Years":"Year"}</div>
           <div className="flex gap-1 items-center text-mine-shaft-400 text-xs">
             <MapPin className=" h-5 w-5" />
-            {profile?.location}
+            {props?.location}
           </div>
         </div>
        

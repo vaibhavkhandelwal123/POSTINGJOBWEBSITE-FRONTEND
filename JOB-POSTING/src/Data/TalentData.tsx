@@ -41,7 +41,7 @@ const searchFields = [
       "PHP",
       "Swift",
       "Go",
-      "React",
+      "ReactJS",
       "Node.js",
       "Django",
       "Flask",
