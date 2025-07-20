@@ -33,13 +33,17 @@ const Profile = () => {
             Message
           </Button>
         </div>
-        <div className="text-xl flex items-center gap-1">
+        <div className="text-xl flex items-center gap-1 mt-2">
           <BriefcaseBusiness className=" h-5 w-5 stroke={1.5}" />
           {profile?.jobTitle} &bull; {profile?.company}
         </div>
-        <div className="flex gap-1 items-center text-mine-shaft-300 text-lg">
+        <div className="flex  mt-1 gap-1 items-center text-mine-shaft-300 text-lg">
           <MapPin className=" h-5 w-5 stroke={1.5}" />
           {profile?.location}
+        </div>
+        <div className="flex mt-1 gap-1 items-center text-mine-shaft-300 text-lg">
+          <BriefcaseBusiness className=" h-5 w-5 stroke={1.5}" />
+          Experience: {profile?.totalExp} Years
         </div>
         <Divider my="xl" size="sm" />
         <div className="">

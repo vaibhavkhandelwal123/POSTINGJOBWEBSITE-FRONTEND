@@ -8,6 +8,7 @@ import { resetFilter } from "../Slices/FilterSlice";
 const Talents = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
+  const sort = useSelector((state:any)=>state.sort);
   const filter = useSelector((state: any) => state.filter);
   const [filtered, setFiltered] = useState([{}]);
   const [talentList, setTalentList] = useState([{}]);
@@ -21,6 +22,16 @@ const Talents = () => {
         console.log("Failed to fetch talents", error);
       });
   }, []);
+
+  useEffect(()=>{
+  if(sort=="Experience: Low to High"){
+    setTalentList([...talentList].sort((a:any,b:any)=>a.totalExp-b.totalExp));
+  }
+  else if(sort=="Experience: High to Low"){
+    setTalentList([...talentList].sort((a:any,b:any)=>b.totalExp-a.totalExp));
+  }
+  
+ },[sort])
 
   useEffect(() => {
     let filtertalent = talentList;
@@ -62,7 +73,7 @@ const Talents = () => {
     <div className="p-5 ">
       <div className="flex justify-between items-center">
         <div className="text-2xl font-semibold">Recommanded Profiles</div>
-        <Sort />
+        <Sort talent/>
       </div>
       <div className="mt-10 flex flex-wrap gap-5 justify-around">
         {filtered.length?filtered.map(

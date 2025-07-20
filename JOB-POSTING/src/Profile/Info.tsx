@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { fields } from "../Data/ProfileData";
 import SelectInput from "./SelectInput";
-import { ActionIcon } from "@mantine/core";
-import { BriefcaseBusiness, Check, Edit2, MapPin, Save, X } from "lucide-react";
+import { ActionIcon, NumberInput } from "@mantine/core";
+import { Briefcase, BriefcaseBusiness, Check, Edit2, MapPin, Save, X } from "lucide-react";
 import { useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
@@ -16,7 +16,7 @@ const Info = () => {
   const handleEdit = () => {
     if(!edit){
       setEdit(true);
-      form.setValues({jobTitle:profile.jobTitle,company:profile.company,location:profile.location})
+      form.setValues({jobTitle:profile.jobTitle,company:profile.company,location:profile.location,totalExp:profile.totalExp})
     }
     else{
       setEdit(false);
@@ -24,7 +24,7 @@ const Info = () => {
   };
   const form = useForm({
     mode: 'controlled',
-    initialValues: { jobTitle: '', company: '' ,location: ''},
+    initialValues: { jobTitle: '', company: '' ,location: '',totalExp: 1},
   })
   const handleSave = () => {
     setEdit(false);
@@ -67,8 +67,9 @@ const Info = () => {
             <SelectInput form={form} name="jobTitle" {...select[0]} />
             <SelectInput form={form} name="company" {...select[1]} />
           </div>
-          <div>
+          <div className="flex gap-10 [&>*]:w-1/2">
             <SelectInput form={form} name="location" {...select[2]} />
+            <NumberInput withAsterisk clampBehavior="strict" hideControls min={1} max={50} label="Experience" {...form.getInputProps('totalExp')}/>
           </div>
         </>
       )}
@@ -81,6 +82,10 @@ const Info = () => {
           <div className="flex gap-1 items-center text-mine-shaft-300 text-lg">
             <MapPin className=" h-5 w-5 stroke={1.5}" />
             {profile.location}
+          </div>
+          <div className="flex gap-1 items-center text-mine-shaft-300 text-lg">
+            <BriefcaseBusiness className=" h-5 w-5 stroke={1.5}" />
+            Experience: {profile.totalExp} Years
           </div>
         </div>
       )}

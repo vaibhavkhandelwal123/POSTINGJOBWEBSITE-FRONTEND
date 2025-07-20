@@ -21,7 +21,7 @@ const Header = () => {
           console.error(error);
         });
     }
-  }, [user, dispatch]);
+  }, []);
   const location = useLocation();
   return location.pathname!="/signup"&& location.pathname!="/login" && location.pathname!="/forgot" &&
     <div className="text-white flex justify-between items-center px-6 h-20  bg-mine-shaft-950 font-['poppins']">
