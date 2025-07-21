@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getProfile } from "../Services/ProfileService";
 import { setProfile } from "../Slices/ProfileSlice";
+import Notification from "./Notification";
 const Header = () => {
   const user = useSelector((state:any) => state.user);
   const dispatch = useSelector((state:any) => state.dispatch);
@@ -38,10 +39,7 @@ const Header = () => {
           <Link to="/login">
             <Button variant="subtle" color="bright-sun.4">Login</Button>
           </Link>}
-        <div className="bg-mine-shaft-900 rounded-full p-1.5">
-          <Indicator color="bright-sun.4" size={8} offset={6} processing><NotificationsNoneIcon /></Indicator>
-          
-        </div>
+        {user ? <Notification/>:<></>}
         {/* <div className="bg-mine-shaft-900 rounded-full p-1.5">
           <SettingsIcon />
         </div> */}
