@@ -1,13 +1,29 @@
 import { Text, Divider, Button } from "@mantine/core";
 import { Clock, Bookmark, CalendarDaysIcon, BookMarkedIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { timeAgo } from "../Services/Utilities";
+import {formatInterviewTime, timeAgo } from "../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
+import { useEffect, useState } from "react";
 
 const Card = (props: any) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
+  
+  const [interviewTime, setInterviewTime] = useState("");
+useEffect(() => {
+  if (props.interviewing && props.applicants?.length && profile?.id) {
+    const matchedApplicant = props.applicants.find(
+      (appli: any) => appli.applicantId === profile.id
+    );
+    
+    if (matchedApplicant) {
+      setInterviewTime(matchedApplicant.interviewTime);
+    }
+  }
+}, [props.interviewing, props.applicants, profile.id]);
+
+
   const handleSaveJob = () => {
       let savedJobs: any = [...(profile.savedJobs ?? [])];
       if (savedJobs?.includes(props.id)) {
@@ -21,6 +37,7 @@ const Card = (props: any) => {
       }
       dispatch(changeProfile(updatedProfile));
     }
+
   return (
     <div className="bg-mine-shaft-900 p-4 w-72 flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400">
       <div className="flex justify-between">
@@ -83,13 +100,15 @@ const Card = (props: any) => {
           </Button>
         </div>
       )}
-      {props.interviewing && (
+     
+{props.interviewing && (
         <div className="flex text-sm gap-1 items-center">
           <CalendarDaysIcon className="text-bright-sun-400 w-5 h-5" />
-          Sun, 25 August &bull;
-          <span className="text-mine-shaft-400"> 10:00 AM</span>
+          {formatInterviewTime(interviewTime)}
         </div>
       )}
+
+
       <Link to={`/jobs/${props.id}`}>
         <Button fullWidth className="to-bright-sun-400" variant="outline">
           View Job

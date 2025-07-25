@@ -1,5 +1,5 @@
 import { Avatar, Button, Divider, Modal, Text } from "@mantine/core";
-import { DateInput, TimeInput } from "@mantine/dates";
+import { DateInput, TimeInput, TimePicker } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import { CalendarDaysIcon, Heart, MapPin } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -18,9 +18,10 @@ const TalentCard = (props: any) => {
   const [app,{open:openApp,close:closeApp}]=useDisclosure(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [date, setDate] = useState<Date | null>(null);
-  const [time, setTime] = useState<any | null>(null);
+  const [time, setTime] = useState('');
   const [profile, setProfile] = useState<any>({});
   const [job, setJob] = useState<any>({});
+  const [loading,setLoading] = useState(false);
   useEffect(() => {
     if (props.applicantId)
       getProfile(props.applicantId)
@@ -35,38 +36,60 @@ const TalentCard = (props: any) => {
         });
     else setProfile(props);
   }, []);
-  const ref = useRef<HTMLInputElement>(null);
   const handleOffer = (status: string) => {
-    if (status=="INTERVIEWING" && (!date || !time)) {
-      NotificationError("Error", "Please select both date and time.");
-      return;
-    }
-    let interview: any = {
-      id,
-      applicantId: profile.id,
-      applicationStatus: status
-    };
-    if(status=="INTERVIEWING"){
-      const [hours, minutes] = time.split(":").map(Number);
-      const interviewDate = new Date(date);
-      interviewDate.setHours(hours, minutes);
-      interview={...interview,interviewTime:date}
-    }
-    changeAppStatus(interview)
-      .then((res: any) => {
-        if(status=="INTERVIEWING")NotificationSuccess("Interview Scheduled", "Interview scheduled successfully");
-        else if(status=="OFFERED")NotificationSuccess("Offered", "Offer had sent successfully");
-        else NotificationSuccess("Rejected", "Applicant has been Rejected");
-        window.location.reload();
-      })
-      .catch((err: any) => {
-        console.error("Error changing application status:", err);
-        NotificationError(
-          "Error",
-          "Failed to schedule interview. Please try again later."
-        );
-      });
+  if (status === "INTERVIEWING" && (!date || !time)) {
+    NotificationError("Error", "Please select both date and time.");
+    return;
+  }
+
+  setLoading(true);
+
+  let interview: any = {
+    id,
+    applicantId: profile.id,
+    applicationStatus: status,
   };
+
+  if (status === "INTERVIEWING") {
+    const [timePart, period] = time.split(" ");
+    const [rawHour, rawMin] = timePart.split(":").map(Number);
+    let hour = rawHour;
+    if (period === "PM" && rawHour !== 12) hour += 12;
+    if (period === "AM" && rawHour === 12) hour = 0;
+
+    const minutes = rawMin;
+
+    const interviewDate = new Date(date);
+    interviewDate.setHours(hour);
+    interviewDate.setMinutes(minutes);
+    interviewDate.setSeconds(0);
+    interviewDate.setMilliseconds(0);
+
+    interview = {
+      ...interview,
+      interviewTime: interviewDate.toISOString(),
+    };
+
+    console.log("Scheduled Interview:", interview);
+  }
+  changeAppStatus(interview)
+    .then((res: any) => {
+      if (status === "INTERVIEWING")
+        NotificationSuccess("Interview Scheduled", "Interview scheduled successfully");
+      else if (status === "OFFERED")
+        NotificationSuccess("Offered", "Offer has been sent successfully");
+      else
+        NotificationSuccess("Rejected", "Applicant has been rejected");
+
+      setLoading(false);
+      window.location.reload();
+    })
+    .catch((err: any) => {
+      setLoading(false);
+      NotificationError("Error", "Failed to schedule interview. Please try again later.");
+    });
+};
+
   return (
     <div className="bg-mine-shaft-900 p-4 w-96 flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400">
       <div className="flex justify-between">
@@ -129,10 +152,10 @@ const TalentCard = (props: any) => {
         <Divider color="mine-shaft.5" />
         <div>
           <div className="flex [&>*]:w-1/2 [&>*]:p-1 gap-2">
-            <Button onClick={()=>handleOffer("OFFERED")} color="bright-sun.5" variant="outline" fullWidth>
+            <Button onClick={()=>handleOffer("OFFERED")} loading={loading} color="bright-sun.5" variant="outline" fullWidth>
               Accept
             </Button>
-            <Button onClick={()=>handleOffer("REJECTED")} color="bright-sun.5" variant="light" fullWidth>
+            <Button onClick={()=>handleOffer("REJECTED")} loading={loading} color="bright-sun.5" variant="light" fullWidth>
               Reject
             </Button>
           </div>
@@ -154,6 +177,7 @@ const TalentCard = (props: any) => {
                   color="bright-sun.5"
                   variant="light"
                   fullWidth
+                  
                 >
                   Schedule
                 </Button>
@@ -186,13 +210,12 @@ const TalentCard = (props: any) => {
             label="Date"
             placeholder="Enter Date"
           />
-          <TimeInput
+          <TimePicker
             label="Time"
-            ref={ref}
-            minTime=""
+            withDropdown
+            format="12h"
             value={time}
-            onChange={(event) => setTime(event.currentTarget.value)}
-            onClick={() => ref.current?.showPicker()}
+            onChange={setTime}
           />
           <Button
             onClick={() => {
@@ -200,6 +223,7 @@ const TalentCard = (props: any) => {
             }}
             color="bright-sun.5"
             variant="light"
+            loading={loading}
             fullWidth
           >
             Schedule

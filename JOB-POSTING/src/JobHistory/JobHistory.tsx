@@ -1,6 +1,6 @@
 import { Tabs } from "@mantine/core";
 import Card from "./Card";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getAllJobs } from "../Services/JobService";
 import { useSelector } from "react-redux";
 import { NotificationError } from "../SignUpLogin/NotificationAny";
@@ -71,7 +71,7 @@ useEffect(() => {
           <Tabs.Panel value={activeTab} className="[&>div]:w-full">
             <div className="mt-10 flex flex-wrap gap-5">
               {showList.map((job: any, index: any) => (
-                <Card key={index} {...job}  {...{[activeTab.toLowerCase()]: true}} />
+                <Card key={index} {...job} app={job.applicants} {...{[activeTab.toLowerCase()]: true}} />
               ))}
             </div>
           </Tabs.Panel>

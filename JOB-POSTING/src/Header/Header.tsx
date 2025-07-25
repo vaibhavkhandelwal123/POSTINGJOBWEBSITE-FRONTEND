@@ -1,6 +1,5 @@
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
-import { Button, Indicator } from "@mantine/core";
+import { Button} from "@mantine/core";
 import NavLinks from "./NavLinks";
 import { Link, useLocation } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";

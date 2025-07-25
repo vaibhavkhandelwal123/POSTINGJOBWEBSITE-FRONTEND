@@ -4,7 +4,9 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { useSelector } from "react-redux";
 import { Check } from "lucide-react";
 import { getNotification, readNotification } from "../Services/NotiService";
+import { useNavigate } from "react-router-dom";
 const Notification = () => {
+  const navigate = useNavigate();
   const user = useSelector((state: any) => state.user);
   const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState<any>([]);
@@ -29,7 +31,7 @@ const Notification = () => {
     <Menu shadow="md" width={400} opened={open} onChange={setOpen}>
       <Menu.Target>
         <div className="bg-mine-shaft-900 rounded-full p-1.5">
-          <Indicator color="bright-sun.4" size={8} offset={6} processing>
+          <Indicator color="bright-sun.4" size={8} disabled={notifications.length<=0} offset={6} processing>
             <NotificationsNoneIcon />
           </Indicator>
         </div>
@@ -39,6 +41,11 @@ const Notification = () => {
         <div className="flex flex-col gap-1">
           {notifications.map((noti: any, index: number) => (
             <Noti
+            onClick={()=>{
+              navigate(noti.route);
+              setOpen(false);
+              unread(index)
+            }}
             key={index}
               className="hover:bg-mine-shaft-900 cursor-pointer"
               icon={<Check size={20} />}

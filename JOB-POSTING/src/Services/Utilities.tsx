@@ -34,17 +34,24 @@ const getBase64=(file:any)=>{
     })
   }
 
-  const formatInterviewTime=(dateStr:any)=>{
-    const date = new Date(dateStr);
-    return date.toLocaleString('en-US', {
-      year: 'numeric',
-      month:'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true
-    });
-  }
+ 
+
+  const formatInterviewTime = (dateStr: string | Date): string => {
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return "Invalid date";
+
+  return new Intl.DateTimeFormat('en-US', {
+    timeZone:'Asia/Kolkata',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  }).format(date);
+};
+
+
 
   function openResume(base64String:string) { 
   if (base64String.startsWith("data:")) {

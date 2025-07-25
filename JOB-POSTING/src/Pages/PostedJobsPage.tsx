@@ -16,7 +16,6 @@ const PostedJobsPage = () => {
         getJobPostedBy(user.id).then((res)=>{
             setJobList(res);
             setJob(res.find((item:any) => item.id == id));
-            
         }).catch((error)=>{
             console.error("Error fetching jobs:", error);
         });

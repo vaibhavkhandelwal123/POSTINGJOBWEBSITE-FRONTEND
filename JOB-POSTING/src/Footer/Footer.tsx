@@ -1,9 +1,9 @@
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
-import FacebookIcon from "@mui/icons-material/Facebook";
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from "@mui/icons-material/Instagram";
 import XIcon from "@mui/icons-material/X";
 import { footerLinks } from "../Data/Data";
-import { useLocation } from "react-router-dom";
+import {  Link, useLocation} from "react-router-dom";
 const Footer = () => {
   const location = useLocation();
   return location.pathname!="/signup" &&location.pathname!="/login" && location.pathname!="/forgot"  &&
@@ -19,13 +19,19 @@ const Footer = () => {
         </div>
         <div className="flex gap-4 text-bright-sun-400 justify-center items-center">
           <div className="bg-mine-shaft-900 p-3 rounded-full hover:bg-bright-sun-400 cursor-pointer hover:text-mine-shaft-600 transition-all duration-300 ease-in-out">
-            <FacebookIcon />
+            <Link to="https://linkedin.com/in/vaibhav-khandelwal-413447234">
+            <LinkedInIcon />
+            </Link>
           </div>
           <div className="bg-mine-shaft-900 p-3 rounded-full hover:bg-bright-sun-400 cursor-pointer hover:text-mine-shaft-600 transition-all duration-300 ease-in-out">
-            <InstagramIcon />
+            <Link to="https://www.instagram.com/vaibhav___khandelwal?igsh=MW9oZ3Y5d3AyMXlijeA==">
+            <InstagramIcon/>
+            </Link>
           </div>
           <div className="bg-mine-shaft-900 p-3 rounded-full hover:bg-bright-sun-400 cursor-pointer hover:text-mine-shaft-600 transition-all duration-300 ease-in-out">
-            <XIcon />
+            <Link to="">
+            <XIcon/>
+            </Link>
           </div>
         </div>
       </div>
