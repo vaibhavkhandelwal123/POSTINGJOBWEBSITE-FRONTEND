@@ -1,25 +1,36 @@
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import { Button} from "@mantine/core";
 import NavLinks from "./NavLinks";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getProfile } from "../Services/ProfileService";
 import { setProfile } from "../Slices/ProfileSlice";
 import Notification from "./Notification";
+import { setUser } from "../Slices/UserSlice";
+import { jwtDecode } from "jwt-decode";
 const Header = () => {
+  const navigate = useNavigate();
   const user = useSelector((state:any) => state.user);
-  const dispatch = useSelector((state:any) => state.dispatch);
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    const token = localStorage.getItem("token")||"";
+    if (token!=""){
+      const decoded = jwtDecode(localStorage.getItem("token")||"");
+      dispatch(setUser({...decoded,email:decoded.sub}));
+    }
+  },[navigate])
   useEffect(() => {
     if (user && user.id) {
-      getProfile(user.id)
+      getProfile(user?.profileId)
         .then((data: any) => {
           dispatch(setProfile(data));
         })
         .catch((error: any) => {
           console.error(error);
         });
+
     }
   }, []);
   const location = useLocation();

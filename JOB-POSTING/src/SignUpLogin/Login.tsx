@@ -1,12 +1,14 @@
 import { Button, LoadingOverlay, PasswordInput, TextInput } from "@mantine/core";
-import { AtSignIcon, Check, LockKeyholeIcon, X } from "lucide-react";
+import { AtSignIcon, LockKeyholeIcon} from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../Services/UsersService";
 import { useState } from "react";
 import { loginValidation } from "../Services/FormValidation";
 import { useDispatch } from "react-redux";
 import { NotificationError, NotificationSuccess } from "./NotificationAny";
 import { setUser } from "../Slices/UserSlice";
+import { setjwt } from "../Slices/JWTSlice";
+import { loginUser } from "../Services/AuthService";
+import {jwtDecode} from "jwt-decode";
 const form = {
   email: "",
   password: "",
@@ -41,11 +43,12 @@ const Login = () => {
     if (valid) {
       loginUser(data)
         .then((res) => {
-          console.log("Login successful:", res);
           NotificationSuccess("Login successful", "Redirecting to Home Page...");
+          dispatch(setjwt(res.jwt));
+          const decoded = jwtDecode(res.jwt);
+          dispatch(setUser({...decoded,email:decoded.sub}));
           setTimeout(() => {
             setLoader(false);
-            dispatch(setUser(res));
             navigate("/home");
           }, 4000);
         })

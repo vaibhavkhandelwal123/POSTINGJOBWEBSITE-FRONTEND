@@ -1,44 +1,39 @@
-import axios from "axios";
-const base_url = "http://localhost:8080/users/";
+import axiosInstance from "../Interceptor/AxiosInterceptor";
+
 const registerUser=async (user:any)=>{
-    try {
-        const res = await axios.post(`${base_url}register`, user);
-        return res.data;
-    } catch (error) {
-        throw error;
-    }
+        return axiosInstance.post(`/users/register`, user)
+        .then(res => res.data)
+        .catch((error) => {
+            throw error;
+        });
 }
 const loginUser=async (user:any)=>{
-    try {
-        const res = await axios.post(`${base_url}login`, user);
-        return res.data;
-    } catch (error) {
-        throw error;
-    }
+        return axiosInstance.post(`/users/login`, user)
+            .then(res => res.data)
+            .catch((error) => {
+                throw error;
+            });
 }
 const forgotUser=async (user:any)=>{
-    try {
-        const res = await axios.post(`${base_url}forgot`, user);
-        return res.data;
-    } catch (error) {
-        throw error;
-    }
+    return axiosInstance.post(`/users/forgot`, user)
+        .then(res => res.data)
+        .catch((error) => {
+            throw error;
+        });
 }
 const sendOtp = async (email: any) => {
-    try {
-        const res = await axios.post(`${base_url}sendOtp/${email}`);
-        return res.data;
-    } catch (error) {
-        throw error;
-    }
+    return axiosInstance.post(`/users/sendOtp/${email}`)
+        .then(res => res.data)
+        .catch((error) => {
+            throw error;
+        });
 }
 
 const verifyOtp = async (email: any, otp: any) => {
-    try {
-        const res = await axios.get(`${base_url}verifyOtp/${email}/${otp}`);
-        return res.data;
-    } catch (error) {
-        throw error;
-    }
+    return axiosInstance.get(`/users/verifyOtp/${email}/${otp}`)
+        .then(res => res.data)
+        .catch((error) => {
+            throw error;
+        });
 }
 export {registerUser, loginUser,forgotUser, sendOtp, verifyOtp};
