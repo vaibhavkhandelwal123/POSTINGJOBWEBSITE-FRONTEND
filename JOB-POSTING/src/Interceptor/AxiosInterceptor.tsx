@@ -16,4 +16,18 @@ axiosInstance.interceptors.request.use(
     }
 );
 
+export const setUpResponseInterceptor = (navigate:any) =>{
+    axiosInstance.interceptors.response.use(
+        (response) => {
+            return response;
+        },
+        (error) => {
+            if (error.response && error.response.status === 401) {
+                navigate("/login");
+            }
+            return Promise.reject(error);
+        }
+    );
+}
+
 export default axiosInstance;

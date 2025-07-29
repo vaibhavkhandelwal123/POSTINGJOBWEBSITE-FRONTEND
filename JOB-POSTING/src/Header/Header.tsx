@@ -10,19 +10,21 @@ import { setProfile } from "../Slices/ProfileSlice";
 import Notification from "./Notification";
 import { setUser } from "../Slices/UserSlice";
 import { jwtDecode } from "jwt-decode";
+import { setUpResponseInterceptor } from "../Interceptor/AxiosInterceptor";
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state:any) => state.user);
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token") || "";
   useEffect(()=>{
-    const token = localStorage.getItem("token")||"";
+    setUpResponseInterceptor(navigate);
+  },[navigate])
+  useEffect(() => {
     if (token!=""){
       const decoded = jwtDecode(localStorage.getItem("token")||"");
       dispatch(setUser({...decoded,email:decoded.sub}));
     }
-  },[navigate])
-  useEffect(() => {
-    if (user && user.id) {
+    if( token && user?.profileId){
       getProfile(user?.profileId)
         .then((data: any) => {
           dispatch(setProfile(data));
@@ -30,9 +32,8 @@ const Header = () => {
         .catch((error: any) => {
           console.error(error);
         });
-
-    }
-  }, []);
+      }
+  }, [token,navigate]);
   const location = useLocation();
   return location.pathname!="/signup"&& location.pathname!="/login" && location.pathname!="/forgot" &&
     <div className="text-white flex justify-between items-center px-6 h-20  bg-mine-shaft-950 font-['poppins']">

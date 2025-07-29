@@ -8,4 +8,4 @@ const removeItem = (key: string) => {
   localStorage.removeItem(key);
 };
 
-export { setItem, getItem, removeItem };
+export { setItem, getItem, removeItem};
