@@ -61,11 +61,11 @@ useEffect(() => {
           radius="lg"
           defaultValue="applied"
         >
-          <Tabs.List className="[&_button]:text-lg font-semibold [&_button[data-active='true']]:text-bright-sun-400 mb-5">
+          <Tabs.List className="[&_button]:text-lg font-semibold [&_button[data-active='true']]:text-bright-sun-400 mb-5 sm-mx:[&_button]:!text-lg xs-mx:[&_button]:!text-base sm-mx:[&_button]:!px-2 xs-mx:[&_button]:!px-2 xs-mx:font-medium xs-mx:[&_button]:!py-1 xsm-mx:[&_button]:!text-sm">
             <Tabs.Tab value="APPLIED">Applied</Tabs.Tab>
             <Tabs.Tab value="SAVED">Saved</Tabs.Tab>
             <Tabs.Tab value="OFFERED">Offered</Tabs.Tab>
-            <Tabs.Tab value="INTERVIEWING">Interviewing</Tabs.Tab>
+            <Tabs.Tab value="INTERVIEWING">In Progress</Tabs.Tab>
           </Tabs.List>
 
           <Tabs.Panel value={activeTab} className="[&>div]:w-full">

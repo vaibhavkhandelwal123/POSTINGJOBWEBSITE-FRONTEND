@@ -5,11 +5,13 @@ import TestEditor from "./TestEditor";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { getJob, postJob } from "../Services/JobService";
 import { NotificationError, NotificationSuccess } from "../SignUpLogin/NotificationAny";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+// import { useMediaQuery } from "@mantine/hooks";
 
 const Post = () => {
+  // const matches = useMediaQuery(`(min-width:350px)`);
   const {id} = useParams();
   const [editData,setEditData]=useState(content);
   const user = useSelector((state:any) => state.user);
@@ -78,20 +80,20 @@ const Post = () => {
     });
   }
   return (
-    <div className="w-4/5 mx-auto">
+    <div className="px-16 bs-mx:px-10 md-mx:px-5 py-5">
       <div className="text-2xl font-semibold mb-5">Post a Job</div>
       <div className="flex flex-col gap-5">
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 md-mx:gap-5 sm-mx:[&>*]:w-full sm-mx:flex-wrap [&>*]:w-1/2">
           <SelectInput form={form} name="jobTitle" {...select[0]} />
           <SelectInput form={form} name="company" {...select[1]} />
         </div>
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 md-mx:gap-5 sm-mx:[&>*]:w-full sm-mx:flex-wrap [&>*]:w-1/2">
           <SelectInput form={form} name="experience" {...select[2]} />
           <SelectInput form={form} name="jobType" {...select[3]} />
         </div>
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 md-mx:gap-5 sm-mx:[&>*]:w-full sm-mx:flex-wrap [&>*]:w-1/2">
           <SelectInput form={form} name="location" {...select[4]} />
-          <NumberInput label="Package Offered (in LPA)"
+          <NumberInput label="Salary (in LPA)"
             placeholder="Enter package offered"
             min={0}
             {...form.getInputProps("packageOffered")}

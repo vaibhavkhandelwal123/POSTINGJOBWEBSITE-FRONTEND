@@ -20,7 +20,7 @@ const ApplyJob = () => {
   return (
     <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins'] p-4">
 <Divider size="xs"/>
-          <Button onClick={() => navigate(-1)} my="md" leftSection={<ArrowLeft size={20}/>} color="bright-sun.5" variant="light">Back</Button>
+          <Button mb="xs" onClick={() => navigate(-1)} my="md" leftSection={<ArrowLeft size={20}/>} color="bright-sun.5" variant="light">Back</Button>
 
         <ApplyJobComp {...job}/>
     </div>

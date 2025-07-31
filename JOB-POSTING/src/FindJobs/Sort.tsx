@@ -38,10 +38,10 @@ const Sort = (props:any) => {
     <div className="relative">
       <div
         onClick={handleClick}
-        className="flex justify-between items-center border border-bright-sun-400 px-4 py-2 rounded-xl font-['poppins'] bg-mine-shaft-950 hover:bg-mine-shaft-800 cursor-pointer"
+        className="flex justify-between items-center border border-bright-sun-400  px-4 xs-mx:px-2 py-2 xs-mx:py-1 rounded-xl font-['poppins'] bg-mine-shaft-950 hover:bg-mine-shaft-800 cursor-pointer"
       >
         <div className="flex text-sm items-center gap-2">
-          {selectedItem} <LucideSettings2 size={20} className="text-bright-sun-400" />
+          {selectedItem} <LucideSettings2 style={{width:'70%',height:'70%'}} size={20} className="text-bright-sun-400" />
         </div>
       </div>
       {open && (
@@ -51,7 +51,7 @@ const Sort = (props:any) => {
         ></div>
       )}
       {open && (
-        <div className="absolute top-full mt-2 w-full bg-mine-shaft-850 border border-bright-sun-400 rounded-lg shadow-lg z-10">
+        <div className="absolute top-full mt-2 w-full bg-mine-shaft-950 border border-bright-sun-400 rounded-lg shadow-lg z-10">
           {props.sort=="job"?opt.map((item, index) => (
             <div
               key={index}

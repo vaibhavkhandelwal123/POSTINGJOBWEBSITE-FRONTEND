@@ -39,7 +39,7 @@ const ProfileHeader = () => {
     <Menu shadow="md" width={200} opened={open} onChange={setOpen}>
       <Menu.Target>
         <div className="flex gap-2 items-center cursor-pointer">
-          <div>{user.name}</div>
+          <div className="xs-mx:hidden">{user.name}</div>
           <Avatar src={profile.pictures ? `data:image/png;base64,${profile.pictures}` : "/avatar-7.png"} alt="it's me" />
         </div>
       </Menu.Target>

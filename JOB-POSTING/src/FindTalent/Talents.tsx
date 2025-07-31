@@ -70,12 +70,12 @@ const Talents = () => {
     setFiltered(filtertalent);
   }, [filter, talentList]);
   return (
-    <div className="p-5 ">
-      <div className="flex justify-between items-center">
-        <div className="text-2xl font-semibold">Recommanded Profiles</div>
+    <div className="p-5 py-5">
+      <div className="flex flex-wrap justify-between items-center">
+        <div className="text-2xl xs-mx:text-xl font-semibold">Recommanded Profiles</div>
         <Sort talent/>
       </div>
-      <div className="mt-10 flex flex-wrap gap-5 justify-around">
+      <div className="mt-10 flex flex-wrap gap-5">
         {filtered.length?filtered.map(
           (profile: any, index: number) =>
             profile.id != user.id && <NewTalentCard key={index} {...profile} />

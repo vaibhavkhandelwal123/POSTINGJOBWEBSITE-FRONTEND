@@ -10,7 +10,7 @@ const NavLinks = () => {
   ];
   const location = useLocation();
   return (
-    <div className="flex gap-5 h-full items-center text-min-shaft-300 ">
+    <div className="flex bs-mx:hidden gap-5 h-full items-center text-min-shaft-300 ">
       {links.map((link, index) => (
         <div
           className={`border-t-[3px] h-full flex items-center border-transparent hover:border-bright-sun-400 transition-all duration-300 ${

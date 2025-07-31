@@ -30,9 +30,9 @@ useEffect(()=>{
   });
 
   return (
-    <RichTextEditor editor={editor}>
+    <RichTextEditor className='flex-wrap' editor={editor}>
       <RichTextEditor.Toolbar bg="mine-shaft.2" sticky stickyOffset={60}>
-        <RichTextEditor.ControlsGroup>
+        <RichTextEditor.ControlsGroup className='flex flex-wrap'>
           <RichTextEditor.Bold />
           <RichTextEditor.Italic />
           <RichTextEditor.Underline />
@@ -46,7 +46,7 @@ useEffect(()=>{
           <RichTextEditor.H4 />
         </RichTextEditor.ControlsGroup>
 
-        <RichTextEditor.ControlsGroup>
+        <RichTextEditor.ControlsGroup className='flex-wrap'>
           <RichTextEditor.Blockquote />
           <RichTextEditor.Hr />
           <RichTextEditor.BulletList />
