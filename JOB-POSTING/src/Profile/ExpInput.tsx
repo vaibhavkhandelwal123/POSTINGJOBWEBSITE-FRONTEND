@@ -77,7 +77,7 @@ const ExpInput = (props: any) => {
         {props.add ? "Add Experience" : "Edit Experience"}
       </div>
       <div className="flex flex-col gap-3 w-full">
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 [&>*]:w-1/2 xs-mx:[&>*]:w-full xs-mx:gap-5 xs-mx:flex-wrap">
           <SelectInput form={form} name="title" {...select[0]} />
           <SelectInput form={form} name="company" {...select[1]} />
         </div>
@@ -94,7 +94,7 @@ const ExpInput = (props: any) => {
             placeholder="Enter Summary..."
           />
         </div>
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 [&>*]:w-1/2 xs-mx:[&>*]:w-full xs-mx:gap-5 xs-mx:flex-wrap">
           <MonthPickerInput
             {...form.getInputProps("startDate")}
             maxDate={form.getValues().endDate || undefined}
@@ -121,7 +121,7 @@ const ExpInput = (props: any) => {
         autoContrast
         label="Currently working here"
       />
-      <div className="flex gap-5 w-2/5">
+      <div className="flex gap-5 xs:w-2/5">
         <Button
           onClick={handleSave}
           color="green.8"

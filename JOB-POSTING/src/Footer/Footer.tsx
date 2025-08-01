@@ -8,10 +8,10 @@ const Footer = () => {
   const location = useLocation();
   return location.pathname!="/signup" &&location.pathname!="/login" && location.pathname!="/forgot"  &&
     <div className="pt-20 pb-5 p-4 flex gap-5 justify-around  flex-wrap bg-mine-shaft-950 font-['poppins']">
-      <div className="flex xs-mx:w-1/2 xsm-mx:w-full  items-center text-bright-sun-400 flex-col w-1/4 sm-mx:w-1/2 sm-mx:justify-evenly gap-4 ">
+      <div className="flex xs-mx:w-1/2 xsm-mx:w-full sm-mx:mx-1  items-center text-bright-sun-400 flex-col w-1/4 sm-mx:w-1/2 sm-mx:justify-evenly gap-4 ">
         <div className="font-bold text-3xl flex items-center gap-2 sm-mx:ml-8">
           <CrisisAlertIcon />
-          <div className="text-3xl font-semibold">TargetJobs</div>
+          <div className="text-3xl font-semibold sm-mx:font-medium xs-mx:mr-2">TargetJobs</div>
         </div>
         <div className="text-mine-shaft-300 text-sm sm-mx:text-center">
           Job Portal with user profiles, skill updates, certifications,work

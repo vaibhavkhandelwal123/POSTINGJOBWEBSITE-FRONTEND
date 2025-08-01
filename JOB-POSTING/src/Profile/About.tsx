@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import { NotificationSuccess } from "../SignUpLogin/NotificationAny";
+import { useMediaQuery } from "@mantine/hooks";
 
 const About = () => {
+  
+  const matches = useMediaQuery("(min-width: 475px)");
   const profile = useSelector((state: any) => state.profile);
   const [about, setAbout] = useState(profile.about);
 
@@ -45,7 +48,7 @@ const About = () => {
         </ActionIcon>)}
           <ActionIcon
           onClick={handleEdit}
-          size="lg"
+          size={matches ? "md" : "lg"}
           variant="subtle"
           color={edit?"red.8":"bright-sun.4"}
           

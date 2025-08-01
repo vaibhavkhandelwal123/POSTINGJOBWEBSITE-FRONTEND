@@ -6,8 +6,10 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import { NotificationSuccess } from "../SignUpLogin/NotificationAny";
+import { useMediaQuery } from "@mantine/hooks";
 
 const CertiInput = (props: any) => {
+  const matches = useMediaQuery("(min-width: 475px)");
   const form = useForm({
     mode: "controlled",
     validateInputOnChange: true,
@@ -50,8 +52,8 @@ const CertiInput = (props: any) => {
   return (
     <div className="flex flex-col gap-3">
       <div className="text-lg font-semibold">Add Certificate</div>
-      <div className="flex gap-5 flex-col">
-        <div className="flex gap-10 [&>*]:w-1/2">
+      <div className="flex gap-5 flex-col w-full">
+        <div className="flex gap-10 [&>*]:w-1/2 xs-mx:[&>*]:w-full xs-mx:gap-5 xs-mx:flex-wrap">
           <TextInput
             {...form.getInputProps("title")}
             label="Name"
@@ -60,7 +62,7 @@ const CertiInput = (props: any) => {
           />
           <SelectInput form={form} name="issuer" {...select[3]} />
         </div>
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 [&>*]:w-1/2 xs-mx:[&>*]:w-full xs-mx:gap-5 xs-mx:flex-wrap">
           <MonthPickerInput
             {...form.getInputProps("issueDate")}
             maxDate={new Date()}
@@ -76,7 +78,7 @@ const CertiInput = (props: any) => {
             placeholder="Enter Certificate ID"
           />
         </div>
-        <div className="flex gap-5 w-2/5">
+        <div className="flex gap-5 sm:w-2/5">
           <Button
             onClick={handleSave}
             color="green.8"

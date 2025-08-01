@@ -4,8 +4,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import { NotificationSuccess } from "../SignUpLogin/NotificationAny";
+import { useMediaQuery } from "@mantine/hooks";
 
 const Skills = () => {
+  
+  const matches = useMediaQuery("(min-width: 475px)");
     const [edit, setEdit] = useState(false);
     const dispatch = useDispatch();
     const [skills, setSkills] = useState<string[]>([]);
@@ -35,7 +38,7 @@ const Skills = () => {
           {edit && (
             <ActionIcon
               onClick={handleSave}
-              size="lg"
+              size={matches ? "md" : "lg"}
               variant="subtle"
               color={edit?"green.8":"bright-sun.4"}
             >
@@ -43,7 +46,7 @@ const Skills = () => {
         </ActionIcon>)}
           <ActionIcon
           onClick={handleEdit}
-          size="lg"
+          size={matches ? "md" : "lg"}
           variant="subtle"
           color={edit?"red.8":"bright-sun.4"}
           

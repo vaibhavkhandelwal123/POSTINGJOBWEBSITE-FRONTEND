@@ -4,8 +4,11 @@ import React from 'react'
 import ExpInput from './ExpInput';
 import ExpCard from './ExpCard';
 import { useSelector } from 'react-redux';
+import { useMediaQuery } from '@mantine/hooks';
 
 const Experience = () => {
+  
+  const matches = useMediaQuery("(min-width: 475px)");
     const [Exp, setExp] = React.useState(false);
     const [edit, setEdit] = React.useState(false);
     const profile = useSelector((state: any) => state.profile);
@@ -19,7 +22,7 @@ const Experience = () => {
                 <div className="flex gap-2">
                   <ActionIcon
                     onClick={() => setExp(true)}
-                    size="lg"
+                    size={matches ? "md" : "lg"}
                     variant="subtle"
                     color="bright-sun.4"
                   >
@@ -27,7 +30,7 @@ const Experience = () => {
                   </ActionIcon>
                   <ActionIcon
                     onClick={handleEdit}
-                    size="lg"
+                    size={matches ? "md" : "lg"}
                     variant="subtle"
                     color={edit ? "red.8" : "bright-sun.4"}
                   >
