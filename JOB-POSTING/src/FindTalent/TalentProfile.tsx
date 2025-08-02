@@ -12,7 +12,7 @@ const TalentProfile = () => {
         
           <Button leftSection={<ArrowLeft size={20}/>} my="sm" onClick={()=>navigate(-1)} color="bright-sun.5" variant="light">Back</Button>
       
-        <div className="flex gap-5">
+        <div className="flex gap-5 lg-mx:flex-wrap">
             <Profile/>
             <RecommendTalent/>
         </div>

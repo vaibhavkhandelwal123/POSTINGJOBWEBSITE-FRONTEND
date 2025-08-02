@@ -14,6 +14,7 @@ const JobDesc = (props:any) => {
   const skillsRequired = props.skillsRequired ?? [];
   const dispatch = useDispatch();
   const handleSaveJob = () => {
+    
       let savedJobs: any = [...(profile.savedJobs ?? [])];
       if (savedJobs?.includes(props.id)) {
         savedJobs = savedJobs?.filter((jobId:any) => jobId !== props.id);
@@ -37,20 +38,24 @@ const JobDesc = (props:any) => {
   return (
     <div className="w-2/3 bs-mx:w-full ">
       <div className="flex justify-between items-center flex-wrap">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 sm-mx:gap-5">
           <div className="p-3 bg-mine-shaft-800 rounded-xl shrink-0">
             <img className="h-14 w-14 xs-mx:h-10 xs-mx:w-10" src={`/Logos/${props.company}.png`} alt="" />
           </div>
           <div>
-            <div className="font-semibold text-2xl ">
+            <div className="font-semibold text-2xl sm-mx:text-xl xs-mx:text-lg">
               {props.jobTitle}
             </div>
             <div className="text-lg text-mine-shaft-300 flex xs-mx:flex-wrap sm-mx:text-base">
-             <span>{props.company} &#x2022;Posted</span> <span>{timeAgo(props.postTime)} &#x2022; </span><span>{props.applicants?props.applicants.length:0} Applicants</span>
+            <span>{props.company}</span>
+            <span className="mx-2">&#x2022;</span>
+            <span>Posted {timeAgo(props.postTime)}</span>
+            <span className="mx-2">&#x2022;</span>
+            <span>{props.applicants ? props.applicants.length : 0} Applicants</span>
             </div>
           </div>
         </div>
-        <div className="flex sm:flex-col gap-2 items-center sm-mx:my-3 sm-mx:w-full sm-mx:[&>button]:w-1/2">
+        <div className="flex sm:flex-col  gap-2 items-center sm-mx:my-3 sm-mx:w-full sm-mx:[&>button]:w-100px">
           
             {props.jobStatus=="CLOSED" ?
              <Link to={props.edit?`/post-job/${props.id}`:`/apply-job/${props.id}`}><Button color="bright-sun.5" variant="light">

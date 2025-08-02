@@ -66,7 +66,7 @@ const Login = () => {
           overlayProps={{ radius: 'sm', blur: 2 }}
           loaderProps={{ color: 'bright-sun.4', type: 'bars' }}
         />
-    <div className="w-1/2 px-20 flex flex-col justify-center gap-3">
+    <div className="w-1/2 sm-mx:w-full px-20  bs-mx:px-10 md-mx:px-5 flex flex-col justify-center gap-3">
       <div className="text-2xl font-semibold">Login</div>
       <TextInput
         error={formError.email}
@@ -99,13 +99,13 @@ const Login = () => {
       <Button loading={loader} onClick={handleSubmit} autoContrast variant="filled">
         Login
       </Button>
-      <div className="mx-auto">
+      <div className="mx-auto sm-mx:text-sm xs-mx:text-xs">
         Don't have an account?{" "}
         <span
           onClick={() => {
             navigate("/signup");
           }}
-          className="text-bright-sun-400 hover:underline cursor-pointer"
+          className="text-bright-sun-400 sm-mx:text-sm xs-mx:text-xs hover:underline cursor-pointer"
         >
           SignUp
         </span>

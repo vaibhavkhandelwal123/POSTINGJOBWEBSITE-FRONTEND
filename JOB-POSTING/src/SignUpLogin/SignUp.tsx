@@ -8,12 +8,11 @@ import {
   Radio,
   TextInput,
 } from "@mantine/core";
-import { AtSignIcon, Check, LockKeyholeIcon, X } from "lucide-react";
+import { AtSignIcon, LockKeyholeIcon} from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../Services/UsersService";
 import { SignUpValidation } from "../Services/FormValidation";
-import { Notifications } from "@mantine/notifications";
 import { NotificationError, NotificationSuccess } from "./NotificationAny";
 
 const initialForm = {
@@ -128,7 +127,7 @@ const SignUp = () => {
         overlayProps={{ radius: "sm", blur: 2 }}
         loaderProps={{ color: "bright-sun.4", type: "bars" }}
       />
-      <div className="w-1/2 px-20 flex flex-col justify-center gap-3">
+      <div className="w-1/2 sm-mx:py-20 sm-mx:w-full px-20 bs-mx:px-10 md-mx:px-5 flex flex-col justify-center gap-3">
         <div className="text-2xl font-semibold">Create Account</div>
 
         <TextInput
@@ -181,18 +180,18 @@ const SignUp = () => {
           label="You are?"
           withAsterisk
         >
-          <Group mt="xs">
+          <div className="flex gap-6 sm-mx:gap-3">
             <Radio
-              className="hover:bg-mine-shaft-900 has-[:checked]:bg-bright-sun-400/5 py-4 px-6 border has-[:checked]:border-bright-sun-400 border-mine-shaft-800 rounded-lg"
+              className="hover:bg-mine-shaft-900 has-[:checked]:bg-bright-sun-400/5 py-4 px-6 sm-mx:px-4 sm-mx:py-2 border has-[:checked]:border-bright-sun-400 border-mine-shaft-800 rounded-lg"
               value="APPLICANT"
               label="Applicant"
             />
             <Radio
-              className="hover:bg-mine-shaft-900 has-[:checked]:bg-bright-sun-400/5 py-4 px-6 border has-[:checked]:border-bright-sun-400 border-mine-shaft-800 rounded-lg"
+              className="hover:bg-mine-shaft-900 has-[:checked]:bg-bright-sun-400/5 py-4 px-6 sm-mx:px-4 sm-mx:py-2 border has-[:checked]:border-bright-sun-400 border-mine-shaft-800 rounded-lg"
               value="EMPLOYER"
               label="Employer"
             />
-          </Group>
+</div>
         </Radio.Group>
 
         <Checkbox
@@ -214,7 +213,7 @@ const SignUp = () => {
           Sign Up
         </Button>
 
-        <div className="mx-auto">
+        <div className="mx-auto sm-mx:text-sm xs-mx:text-xs">
           Have an account?{" "}
           <span
             onClick={() => {
@@ -222,7 +221,7 @@ const SignUp = () => {
               setFormError(initialForm);
               setData(initialForm);
             }}
-            className="text-bright-sun-400 hover:underline cursor-pointer"
+            className="text-bright-sun-400 sm-mx:text-sm xs-mx:text-xs hover:underline cursor-pointer"
           >
             Login
           </span>

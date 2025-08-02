@@ -15,7 +15,6 @@ const HomePage = () => {
       <Working/>
       <Testimonials/>
       <Subscribe/>
-   
     </div>
   )
 }

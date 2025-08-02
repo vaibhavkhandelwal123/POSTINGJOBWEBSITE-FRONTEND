@@ -11,6 +11,7 @@ const UserSlice = createSlice({
     },
     removeUser: (state) => {
       removeItem("user");
+      removeItem("token");
       state = null;
       return state;
     }

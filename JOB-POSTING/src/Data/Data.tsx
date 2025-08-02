@@ -114,16 +114,7 @@ const company = [
         "rating": 4,
         "review": "Great platform for job seekers! The application process is seamless.",
     },
-    {
-        "name": "Diana Evans",
-        "rating": 4.5,
-        "review": "I found a great internship through this portal. The support team was very helpful!",
-    },
-    {
-        "name": "Ethan Foster",
-        "rating": 5,
-        "review": "This is the best job portal I've used! The features are top-notch and very user-friendly.",
-    },
+    
 ]
 
 const work = [
